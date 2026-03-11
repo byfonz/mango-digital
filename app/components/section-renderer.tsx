@@ -1,23 +1,23 @@
-import { PortableText } from "next-sanity";
+import { Section } from "@/types/section";
+import { BlockRenderer } from "./block-renderer";
+interface Props {
+    section: Section
+}
 
-export function SectionRenderer({ section }) {
+export function SectionRenderer({ section }: Props) {
     return (
         <section>
-            <h2>{section.title}</h2>
-            {section.content.map(block => {
-                switch (block.type) {
-                    case 'textBlock':
-                        return (
-                            <PortableText
-                                key={block.key}
-                                value={block.key}
-                            />
-                        );
-                
-                    default:
-                        break;
-                }
-            })}
+            {section.title && (
+                <h2 className="text-2xl font-medium">
+                    {section.title}
+                </h2>
+            )}
+            {section.blocks.map((block) => (
+                <BlockRenderer
+                    key={block._key}
+                    block={block}
+                />
+            ))}
         </section>
     )
 }

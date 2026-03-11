@@ -1,15 +1,19 @@
+import { Block } from "./block";
+
 export type Section = {
-    key: string;
-    title: string;
-    components: Component[];
+    _key: string;
+    type: SectionType;
+    title?: string;
+    blocks: Block[];
 }
 
-type Component = {
-    key: string;
-    children: React.FC,
-}
-
-type SubSection = {
-    key: string;
-    
-}
+export type SectionType =
+  | "hero"
+  | "summary"
+  | "context"
+  | "workPlan"
+  | "system"
+  | "strategy"
+  | "quotation"
+  | "conditions"
+  | "whyUs"

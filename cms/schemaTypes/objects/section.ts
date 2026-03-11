@@ -11,8 +11,8 @@ export const sectionType = defineType({
   fields: [
     //Section
     defineField({
-      name: 'section',
-      title: 'Section',
+      name: 'type',
+      title: 'Section Type',
       type: 'string',
       options: {
         list: [

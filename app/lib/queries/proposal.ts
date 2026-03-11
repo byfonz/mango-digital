@@ -2,21 +2,31 @@ import { groq } from "next-sanity";
 
 export const proposalQuery = groq`
 *[_type == "proposal" && slug.current == $slug][0]{
+    _id,
     title,
     "slug": slug.current,
-    meta,
+    meta{
+        date,
+        industry,
+        location,
+        tags
+    },
     sections[]{
+        _key,
+        type,
         title,
-        tab,
         blocks[]{
+            _key,
             _type,
             title,
             content,
             table,
-            _type == "subSectionBlock" => {
+            blocks[]{
+                _key,
+                _type,
                 title,
                 content,
-                blocks[],
+                table,
             }
         }
     }
