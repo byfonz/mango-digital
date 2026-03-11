@@ -1,0 +1,84 @@
+{
+  "slug": "alameda-del-valle",
+  "title": "Alameda del Valle",
+  "description": "This is an example description for the blueprint page.",
+  "date": "2026-03-04",
+
+  "meta": {
+    "client": "Alameda del Valle",
+    "location": "Mexicali, Baja California",
+    "industry": "Bienes Raices",
+    "date": "2026-03-05",
+    "version": "1.0"
+  },
+  "summary": {
+    "title": "Resumen Ejecutivo",
+    "description": ""
+  },
+  "approach": {
+    "description": "La estrategia propuesta se basa en tres principios fundamentales:",
+    "layers": [
+      {
+        "title": "Generación de Demanda",
+        "description": "Captar audiencias calificadas con capacidad de compra mediante campañas digitales altamente segmentadas."
+      }
+    ]
+  },
+  "system": {
+    "layers": [
+      {
+        "title": "Generación de Demanda",
+        "objective": "Generar tráfico calificado mediante segmentación financiera y comportamiento digital.",
+        "components": [
+          {
+            "title": "Meta Ads",
+            "description": "Segmentación por nivel socioeconómico e intereses patrimoniales"
+          },
+          {
+            "title": "",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "title": "",
+        "objective": "",
+        "components": [
+          {
+            "title": "",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  },
+  "sections": [
+    {
+      "summary": [
+        {
+          "title": "Resumen Ejecutivo",
+          "components": [
+            {
+              "title": "",
+              "description": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "plan": [
+        {
+          "title": "",
+          "objective": "",
+          "components": [
+            {
+              "title": "",
+              "description": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
