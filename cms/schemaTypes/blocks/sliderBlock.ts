@@ -14,7 +14,7 @@ export const sliderBlock = defineType({
             name: 'slides',
             title: 'Slides',
             type: 'array',
-            of: [{ type: 'slide' }],
+            of: [{ type: 'slideItem' }],
             validation: (rule) => rule.required(),
         })
     ],

@@ -1,7 +1,7 @@
 import { defineType, defineField } from "sanity";
 
-export const slide = defineType({
-    name: 'slide',
+export const slideItem = defineType({
+    name: 'slideItem',
     title: 'Slide',
     type: 'object',
     fields: [

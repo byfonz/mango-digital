@@ -30,7 +30,8 @@ export const proposalType = defineType({
         defineField({
           name: 'author',
           title: 'Author',
-          type: 'string',
+          type: 'reference',
+          to: [{ type: 'author' }]
         }),
         //Date
         defineField({
