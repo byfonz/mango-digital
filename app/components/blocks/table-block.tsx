@@ -1,19 +1,21 @@
-import { Block } from "@/types/section";
-
+import { TableBlockType } from "@/types/block";
+import { tableHelper } from "@/lib/table-helper";
+import { DataTable } from "../tables/data-table";
 interface Props {
-    block: Block;
-};
+    block: TableBlockType
+}
 
 export function TableBlock({ block }: Props) {
-    const rows = block.table?.rows || [];
+    const { columns, data } = tableHelper(block.table);
+
+    if (!columns.length) {
+        return null
+    };
 
     return (
-        <div>
-            {block.title && (
-                <h2 className="text-lg font-medium">
-                    {block.title}
-                </h2>
-            )}
-        </div>
+        <DataTable
+            columns={columns}
+            data={data}
+        />
     );
 }

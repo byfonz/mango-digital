@@ -3,6 +3,7 @@ import { textBlock } from '../blocks/textBlock'
 import { tableBlock } from '../blocks/tableBlock'
 import { imageBlock } from '../blocks/imageBlock'
 import { subSectionBlock } from '../blocks/subsection'
+import { sliderBlock } from '../blocks/sliderBlock'
 
 export const sectionType = defineType({
   name: 'section',
@@ -64,6 +65,7 @@ export const sectionType = defineType({
         textBlock, 
         tableBlock, 
         imageBlock,
+        sliderBlock,
         subSectionBlock
       ],
     }),

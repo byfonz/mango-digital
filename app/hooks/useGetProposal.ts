@@ -5,5 +5,14 @@ import { Proposal } from "@/types/proposal";
 export async function getProposal(
     slug:string
 ): Promise<Proposal | null> {
-    return client.fetch<Proposal | null>(proposalQuery, { slug });
+    if (!slug) {
+        return null
+    };
+
+    const proposal = await client.fetch<Proposal | null>(
+        proposalQuery,
+        { slug }
+    );
+
+    return proposal;
 };

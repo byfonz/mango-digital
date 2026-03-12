@@ -1,23 +1,21 @@
 import { Section } from "@/types/section";
-import { BlockRenderer } from "./block-renderer";
+import { HeroSection } from "./sections/hero-section";
+import { DefaultSection } from "./sections/default-section";
+import { Proposal } from "@/types/proposal";
+import { ComponentType } from "react";
 interface Props {
-    section: Section
+    section: Section;
+    proposal: Proposal;
 }
 
-export function SectionRenderer({ section }: Props) {
+const sectionRegistry: Record<string, ComponentType<Props>> = {
+    hero: HeroSection
+}
+
+export function SectionRenderer({ section, proposal }: Props) {
+    const Component = sectionRegistry[section.type] || DefaultSection
+    
     return (
-        <section>
-            {section.title && (
-                <h2 className="text-2xl font-medium">
-                    {section.title}
-                </h2>
-            )}
-            {section.blocks.map((block) => (
-                <BlockRenderer
-                    key={block._key}
-                    block={block}
-                />
-            ))}
-        </section>
+        <Component section={section} proposal={proposal}/>
     )
 }

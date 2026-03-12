@@ -37,30 +37,9 @@ Backend / CMS
     - GROQ issues
     - rendering architecture problems
     - scalability issues
-2. Review the Sanity schema and suggest improvements for:
-    - proposal document structure
-    - section modularity
-    - block extensibility
-    - future scalability
-    - If needed, propose a better schema structure.
-3. Ensure strong typing across the stack:
-    Sanity Schema
-    → GROQ Query
-    → TypeScript Types
-    → React Components
+2. Help me render the SubSectionBlock and TableBlock.
 
-    Fix:
-    - incorrect types
-    - missing fields
-    - inconsistent naming
-    - nested block typing
-4. Improve the query to ensure:
-    - correct field mapping
-    - consistent block structures
-    - proper nested block support
-    - minimal overfetching
-
-## Codebase
+## Output Format
 - Structure your response in the following order:
 - Architecture Issues Found
 - Schema Improvements
@@ -73,61 +52,84 @@ Backend / CMS
 - Include production-ready code examples.
 
 ## Codebase
+### lib/queries/proposal.tsx
+export const proposalQuery = groq`
+*[_type == "proposal" && slug.current == $slug][0]{
+  _id,
+  title,
+  "slug": slug.current,
 
-## types/proposal.ts
-export type Proposal = {
-  title: string
-  slug: string
-  meta: {
-    date: string
-    industry?: string
-    location?: string
-    tags?: string[]
+  meta{
+    date,
+    industry,
+    location,
+    tags
+  },
+
+  sections[]{
+    _key,
+    type,
+    title,
+
+    blocks[]{
+      _key,
+      _type,
+
+      _type == "textBlock" => {
+        title,
+        content
+      },
+
+      _type == "imageBlock" => {
+        asset,
+        caption
+      },
+
+      _type == "tableBlock" => {
+        table{
+          rows[]{
+            _key,
+            cells
+          }
+        }
+      },
+
+      _type == "subSectionBlock" => {
+        title,
+        content,
+        blocks[]{
+          _key,
+          _type,
+
+          _type == "textBlock" => {
+            title,
+            content
+          },
+
+          _type == "tableBlock" => {
+            table{
+              rows[]{
+                _key,
+                cells
+              }
+            }
+          },
+
+          _type == "imageBlock" => {
+            asset,
+            caption
+        },
+        }
+      }
+    }
   }
-  sections: Section[]
 }
-
-## types/block.ts
-export type TextBlock = {
-  _key: string;
-  _type: "textBlock";
-  title?: string;
-  content: PortableTextBlock[];
-}
-
-export type ImageBlock = {
-  _key: string;
-  _type: "imageBlock";
-  asset: any;
-  caption?: string;
-}
-
-export type TableBlock = {
-  _key: string;
-  _type: "tableBlock";
-  table: any;
-}
-
-export type SubSectionBlock = {
-  _key: string;
-  _type: "subSectionBlock";
-  title?: string;
-  content?: PortableTextBlock[];
-  blocks?: Block[];
-}
-
-export type Block =
-  | TextBlock
-  | ImageBlock
-  | TableBlock
-  | SubSectionBlock
-
-## types/section.ts
+### types/section.ts
 export type Section = {
     _key: string;
     type: SectionType;
     title?: string;
-    block: Block[];
+    blocks: Block[];
 }
 
 export type SectionType =
@@ -141,75 +143,121 @@ export type SectionType =
   | "conditions"
   | "whyUs"
 
-## lib/queries/proposal.tsx
-export const proposalQuery = groq`
-*[_type == "proposal" && slug.current == $slug][0]{
-    title,
-    "slug": slug.current,
-    meta{
-        date,
-        industry,
-        location,
-        tags
-    },
-    sections[]{
-        _key,
-        _type,
-        title,
-        blocks[]{
-            _key,
-            _type,
-            title,
-            content,
-            table,
-            blocks[]{
-                _key,
-                _type,
-                title,
-                content,
-                table,
-            }
-        }
-    }
+### types/block.ts
+export type TextBlockType = {
+  _key: string;
+  _type: "textBlock";
+  title?: string;
+  content: PortableTextBlock[];
 }
-`
-## lib/sanity.ts
-export const client = createClient({
-    projectId: "",
-    dataset: "",
-    apiVersion: "2024-01-01",
-    useCdn: false,
-});
 
-## hooks/useGetProposal.ts
-export async function getProposal(slug:string) {
-    return client.fetch(proposalQuery, { slug });
+export type ImageBlockType = {
+  _key: string;
+  _type: "imageBlock";
+  asset: any;
+  caption?: string;
+}
+
+export type TableBlockType = {
+  _key: string;
+  _type: "tableBlock";
+  table: Table;
+}
+
+export type SubSectionBlockType = {
+  _key: string;
+  _type: "subSectionBlock";
+  title?: string;
+  content?: PortableTextBlock[];
+  blocks?: Block[];
+}
+
+export type Block =
+  | TextBlockType
+  | ImageBlockType
+  | TableBlockType
+  | SubSectionBlockType
+
+### types/proposal.ts
+export type Proposal = {
+  _id: string;
+  title: string
+  slug: string
+  meta: {
+    date: string
+    industry?: string
+    location?: string
+    tags?: string[]
+  }
+  sections: Section[]
+}
+
+### types/table.ts
+export type TableRow = {
+    _key: string;
+    cells: string[];
 };
 
-## components/section-renderer.tsx
-interface Props {
-    section: Section
+export type Table = {
+    rows: TableRow[];
 }
 
-export function SectionRenderer({ section }: Props) {
+### lib/table-helper.ts
+export function tableHelper(table: Table) {
+  if (!table?.rows?.length) {
+    return { 
+      columns: [], 
+      data: [] 
+    };
+  }
+
+  const [headerRow, ...bodyRows] = table.rows;
+
+  const columns: ColumnDef<Record<string, string>>[] =
+    headerRow.cells.map((header, index) => ({
+      accessorKey: `col${index}`,
+      header
+    }))
+
+  const data = bodyRows.map((row) => {
+    const obj: Record<string, string> = {};
+
+    row.cells.forEach((cell, i) => {
+      obj[`col${i}`] = cell;
+    });
+
+    return obj;
+  });
+
+  return { columns, data };
+}
+
+### hooks/useGetProposal.ts
+export async function getProposal(
+    slug:string
+): Promise<Proposal | null> {
+    return client.fetch<Proposal | null>(proposalQuery, { slug });
+};
+
+### components/section-renderer.tsx
+interface Props {
+    section: Section;
+    proposal: Proposal;
+}
+
+const sectionRegistry = {
+    hero: HeroSection
+}
+
+export function SectionRenderer({ section, proposal }: Props) {
+    const Component = sectionRegistry[section.type] || DefaultSection
+    
     return (
-        <section>
-            {section.title && (
-                <h2 className="text-2xl font-medium">
-                    {section.title}
-                </h2>
-            )}
-            {section.block.map((block) => (
-                <BlockRenderer
-                    key={block._key}
-                    block={block}
-                />
-            ))}
-        </section>
+        <Component section={section} proposal={proposal}/>
     )
 }
 
-## components/block-renderer.tsx
+### components/block-renderer.tsx
 interface Props {
     block: Block;
 };
@@ -218,67 +266,149 @@ export function BlockRenderer ({ block }: Props){
     switch (block._type) {
         case 'textBlock':
             return <TextBlock block={block}/>;
+
+        case 'tableBlock':
+            return <TableBlock block={block}/>
+
+        case 'subSectionBlock':
+            return <SubSectionBlock block={block}/>
     
         default:
             return null;
     }
 }
 
-## components/blocks/text-block.tsx
+### components/blocks/subsection-block.ts
 interface Props {
-  block: Block;
-};
+  block: SubSectionBlockType;
+}
 
-export function TextBlock({ block }: Props) {
+export function SubSectionBlock({ block }: Props) {
   return (
-    <div className="prose max-w-none">
+    <div className="space-y-6">
       {block.title && (
-        <h2>{block.title}</h2>
+            <h2 className="text-lg font-medium">{block.title}</h2>
        )}
-      <PortableText value={block.content} />
+      {block.content && (
+        <PortableText value={block.content} />
+        )}
+      {block.blocks?.length ? (
+        <div className="space-y-4">
+          {block.blocks.map((child) => (
+            <BlockRenderer key={child._key} block={child} />
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
 
-## components/blocks/subsection-block.tsx
-export function SubSectionBlock({ block }) {
+### components/blocks/table-block.ts
+interface Props {
+    block: TableBlockType
+}
+
+export function TableBlock({ block }: Props) {
+    const { columns, data } = tableHelper(block.table)
 
     return (
-        <div className="space-y-6">
-            {block.title && (
-                <h2 className="text-lg font-medium">
-                    {block.title}
-                </h2>
-            )}
-            {block.content && (
-                <PortableText value={block.content}/>
-            )}
-            {block.blocks?.map((child) => (
-                <BlockRenderer
-                    key={child._key}
-                    block={child}
-                />
-            ))}
-        </div>
+        <DataTable
+            columns={columns}
+            data={data}
+        />
     );
 }
 
+### components/data-table.tsx
+interface DataTableProps<TData> {
+  columns: ColumnDef<TData>[]
+  data: TData[]
+}
+
+export function DataTable<TData>({
+  columns,
+  data
+}: DataTableProps<TData>) {
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel()
+  })
+
+  return (
+    <div className="rounded-md border">
+
+      <Table>
+
+        <TableHeader>
+          {table.getHeaderGroups().map(headerGroup => (
+            <TableRow key={headerGroup.id}>
+
+              {headerGroup.headers.map(header => (
+                <TableHead key={header.id}>
+
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+
+                </TableHead>
+              ))}
+
+            </TableRow>
+          ))}
+        </TableHeader>
+
+        <TableBody>
+          {table.getRowModel().rows.map(row => (
+            <TableRow key={row.id}>
+
+              {row.getVisibleCells().map(cell => (
+                <TableCell key={cell.id}>
+
+                  {flexRender(
+                    cell.column.columnDef.cell,
+                    cell.getContext()
+                  )}
+
+                </TableCell>
+              ))}
+
+            </TableRow>
+          ))}
+        </TableBody>
+
+      </Table>
+
+    </div>
+  )
+}
+
 ## app/blueprint/[slug]/page.tsx
-export default async function Page({ params }: { params: { slug: string } }) {
-  const data = await getProposal(params.slug);
+export default async function Page({ 
+  params 
+}: { 
+  params: Promise<{ slug: string }> 
+}) {
+  const { slug } = await params;
+  const data = await getProposal(slug);
 
   if (!data) {
     return <p>Proposal Not Found</p>
   };
 
   return (
-    <main>
-      <section>
-        <h2 className="font-medium text-2xl">{data.summary}</h2>
-      </section>
-      <p className="text-xs text-muted">
-        {data.meta.industry}
-      </p>
+    <main className="flex flex-col space-y-10">
+      {data.sections.map((section) => (
+        <SectionRenderer
+          key={section._key}
+          section={section}
+          proposal={data}
+        />
+      ))}
     </main>
   );
 }

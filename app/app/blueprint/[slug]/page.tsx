@@ -13,15 +13,15 @@ export default async function Page({
     return <p>Proposal Not Found</p>
   };
 
+  console.log(JSON.stringify(data.sections, null, 2))
+
   return (
-    <main>
-      <p className="text-xs text-muted">
-        {data.meta.industry}
-      </p>
+    <main className="flex flex-col space-y-10">
       {data.sections.map((section) => (
         <SectionRenderer
           key={section._key}
           section={section}
+          proposal={data}
         />
       ))}
     </main>
