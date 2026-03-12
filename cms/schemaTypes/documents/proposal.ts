@@ -26,34 +26,27 @@ export const proposalType = defineType({
       title: 'Meta',
       type: 'object',
       fields: [
+        //Author
+        defineField({
+          name: 'author',
+          title: 'Author',
+          type: 'string',
+        }),
         //Date
-        {
+        defineField({
           name: 'date',
           title: 'Date',
           type: 'date',
           validation: (rule) => rule.required(),
-        },
-        //Industry
-        {
-          name: 'industry',
-          title: 'Industry',
-          type: 'string',
-          validation: (rule) => rule.required(),
-        },
-        //Location
-        {
-          name: 'location',
-          title: 'Location',
-          type: 'string',
-        },
+        }),
         //Tags
-        {
+        defineField({
           name: 'tags',
           title: 'Tags',
           type: 'array',
           of: [{type: 'string'}],
           options: {layout: 'tags'},
-        },
+        }),
       ],
     }),
     //Sections

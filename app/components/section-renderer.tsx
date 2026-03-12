@@ -1,7 +1,7 @@
-import { Section } from "@/types/section";
+import { Section } from "@/types/documents/section";
 import { HeroSection } from "./sections/hero-section";
 import { DefaultSection } from "./sections/default-section";
-import { Proposal } from "@/types/proposal";
+import { Proposal } from "@/types/documents/proposal";
 import { ComponentType } from "react";
 interface Props {
     section: Section;

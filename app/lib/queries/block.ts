@@ -18,6 +18,17 @@ export const blockProjection = `
             cells
         }
     },
+    slides[]{
+        _key,
+        title,
+        description,
+        image{
+            asset->{
+                _id,
+                url
+            }
+        }
+    },
     blocks[]{
         _key,
         _type,

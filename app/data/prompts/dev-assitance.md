@@ -1,7 +1,7 @@
 You are a senior full-stack engineer and systems architect with deep experience in:
-- Next.js (App Router)
+- Next.js (App Router) 16.1.6
 - TypeScript
-- Sanity CMS
+- Sanity CMS 5.14.1
 - Component-driven architecture
 - Scalable content rendering systems
 
@@ -38,6 +38,7 @@ Backend / CMS
     - rendering architecture problems
     - scalability issues
 2. Help me render the SubSectionBlock and TableBlock.
+3. Suggest schema types that can be useful in the system.
 
 ## Output Format
 - Structure your response in the following order:
@@ -45,14 +46,414 @@ Backend / CMS
 - Schema Improvements
 - TypeScript Improvements
 - Improved GROQ Query
-- Renderer Architecture
-- Refactored Components
-- Improved Page Implementation
 - Recommended Folder Structure
 - Include production-ready code examples.
 
+## Errors
+- Currently having the same error in section and subsection type
+- Type '(({ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... ...' is not assignable to type 'ArrayOfType<"string" | "number" | "boolean" | "object" | "array" | "block" | "date" | "datetime" | "document" | "file" | "geopoint" | "image" | "reference" | "crossDatasetReference" | "globalDocumentReference" | "slug" | "text" | "url" | "email", undefined>[]'.
+  Type '({ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... &...' is not assignable to type 'ArrayOfType<"string" | "number" | "boolean" | "object" | "array" | "block" | "date" | "datetime" | "document" | "file" | "geopoint" | "image" | "reference" | "crossDatasetReference" | "globalDocumentReference" | "slug" | "text" | "url" | "email", undefined>'.
+    Type '{ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }' is not assignable to type 'ArrayOfType<"string" | "number" | "boolean" | "object" | "array" | "block" | "date" | "datetime" | "document" | "file" | "geopoint" | "image" | "reference" | "crossDatasetReference" | "globalDocumentReference" | "slug" | "text" | "url" | "email", undefined>'.
+      Type '{ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }' is not assignable to type '(Omit<ArrayOfEntry<ObjectDefinition>, "validation" | "initialValue"> & { validation?: SchemaValidationValue; initialValue?: any; }) | ArrayOfEntry<...>'.
+        Type '{ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }' is not assignable to type 'Omit<ArrayOfEntry<ObjectDefinition>, "validation" | "initialValue"> & { validation?: SchemaValidationValue; initialValue?: any; }'.
+          Type '{ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }' is not assignable to type '{ validation?: SchemaValidationValue; initialValue?: any; }'.
+            Types of property 'validation' are incompatible.
+              Type 'ValidationBuilder<ObjectRule, Record<string, unknown>> | undefined' is not assignable to type 'SchemaValidationValue'.
+                Type 'ValidationBuilder<ObjectRule, Record<string, unknown>>' is not assignable to type 'SchemaValidationValue'.
+                  Type 'ValidationBuilder<ObjectRule, Record<string, unknown>>' is not assignable to type '(rule: Rule, context?: ValidationContext | undefined) => SchemaValidationValue'.
+                    Type 'RuleBuilder<ObjectRule, Record<string, unknown>>' is not assignable to type 'SchemaValidationValue'.
+                      Type 'ObjectRule' is not assignable to type 'SchemaValidationValue'.
+                        Type 'RuleDef<ObjectRule, Record<string, unknown>>' is missing the following properties from type 'Rule': _type, _level, _required, _typeDef, and 33 more.
+
 ## Codebase
-### lib/queries/proposal.tsx
+### documents/proposal.tsx
+export const proposalType = defineType({
+  name: 'proposal',
+  title: 'Proposals',
+  type: 'document',
+  fields: [
+    //Client Name
+    defineField({
+      name: 'title',
+      title: 'Client Name',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    //Slug
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {source: 'title'},
+      validation: (rule) => rule.required(),
+    }),
+    //Meta
+    defineField({
+      name: 'meta',
+      title: 'Meta',
+      type: 'object',
+      fields: [
+        //Author
+        defineField({
+          name: 'author',
+          title: 'Author',
+          type: 'string',
+        }),
+        //Date
+        defineField({
+          name: 'date',
+          title: 'Date',
+          type: 'date',
+          validation: (rule) => rule.required(),
+        }),
+        //Tags
+        defineField({
+          name: 'tags',
+          title: 'Tags',
+          type: 'array',
+          of: [{type: 'string'}],
+          options: {layout: 'tags'},
+        }),
+      ],
+    }),
+    //Sections
+    defineField({
+      name: 'sections',
+      title: 'Sections',
+      type: 'array',
+      of: [{ type: 'section' }],
+    }),
+  ],
+})
+
+### objects/section.ts
+export const sectionType = defineType({
+  name: 'section',
+  title: 'Section',
+  type: 'object',
+  fields: [
+    //Title
+    defineField({
+      name: 'title',
+      title: 'Section Title',
+      type: 'string',
+    }),
+    //Section
+    defineField({
+      name: 'type',
+      title: 'Section Type',
+      type: 'string',
+      options: {
+        list: [
+          {
+            title: 'Introduction',
+            value: 'hero',
+          },
+          {
+            title: 'Executive Summary',
+            value: 'summary',
+          },
+          {
+            title: 'Project Context',
+            value: 'context',
+          },
+          {
+            title: 'Work Plan',
+            value: 'workPlan',
+          },
+          {
+            title: 'System Architecture',
+            value: 'system',
+          },
+          {
+            title: 'Strategy',
+            value: 'strategy',
+          },
+          {
+            title: 'Quotation',
+            value: 'quotation',
+          },
+          {
+            title: 'Terms & Conditions',
+            value: 'conditions',
+          },
+          {
+            title: 'Why Us?',
+            value: 'whyUs',
+          },
+        ],
+      },
+    }),
+    //Blocks
+    defineField({
+      name: 'blocks', 
+      title: 'Blocks',
+      type: 'array',
+      of: blockTypes,
+    }),
+  ],
+})
+
+### blocks/textBlock.ts
+export const textBlock = defineType({
+    name: 'textBlock',
+    title: 'Text Block',
+    type: 'object',
+    fields:[
+        //Title
+        defineField({
+            name: 'title',
+            title: 'Section Title',
+            type: 'string'
+        }),
+        //Content
+        defineField({
+            name: 'content',
+            title: 'Section Content',
+            type: 'array',
+            of: [{ type: 'block' }]
+        }),
+    ]
+})
+
+### blocks/tableBlock.ts
+export const tableBlock = defineType({
+    name: 'tableBlock',
+    title: 'Table Block',
+    type: 'object',
+    fields: [
+        defineField({
+            name: 'title',
+            title: 'Title',
+            type: 'string'
+        }),
+        defineField({
+            name: 'table',
+            title: 'Table',
+            type: 'table'
+        })
+    ]
+})
+
+### blocks/imageBlock.ts
+export const imageBlock = defineType({
+    name: 'imageBlock',
+    title: 'Image Block',
+    type: 'object',
+    fields: [
+        defineField({
+            name: 'image',
+            title: 'Image',
+            type: 'image',
+            options: { hotspot: true },
+            fields: [
+                {
+                    name: 'alt',
+                    title: 'Alt Title',
+                    type: 'string'
+                }
+            ]
+        }),
+        defineField({
+            name: 'caption',
+            title: 'Image Caption',
+            type: 'string'
+        })
+    ],
+})
+
+### blocks/subsectionBlock.ts
+export const subSectionBlock = defineType({
+    name: 'subsectionBlock',
+    title: 'Sub-Section Block',
+    type: 'object',
+    fields: [
+        //Title
+        defineField({
+            name: 'title',
+            title: 'SubSection Title',
+            type: 'string',
+        }),
+        //Content
+        defineField({
+            name: 'content',
+            title: 'SubSection Content',
+            type: 'array',
+            of: [{ type: 'block' }]
+        }),
+        //Blocks
+        defineField({
+            name: 'blocks',
+            title: 'Blocks',
+            type: 'array',
+            of: [
+                textBlock,
+                imageBlock,
+                tableBlock,
+                sliderBlock
+            ]
+        })
+    ]
+})
+
+### blocks/SlideBlock.ts
+export const sliderBlock = defineType({
+    name: 'sliderBlock',
+    title: 'Slider Block',
+    type: 'object',
+    fields:[
+        defineField({
+            name: 'title',
+            title: 'Slider Title',
+            type: 'string'
+        }),
+        defineField({
+            name: 'slides',
+            title: 'Slides',
+            type: 'array',
+            of: [{ type: 'slide' }],
+            validation: (rule) => rule.required(),
+        })
+    ],
+    preview: {
+        select: {
+            title: 'title',
+            slides: 'slides',
+        },
+        prepare({ title, slides }) {
+            return {
+                title: title || 'Slider Block',
+                slides: `${slides?.length || 0} slides`
+            }
+        }
+    }
+})
+
+### blocks/pricingBlock.ts
+export const pricingBlock = defineType({
+    name: 'pricingBlock',
+    title: 'Pricing Block',
+    type: 'object',
+    fields: [
+        defineField({
+            name: 'name',
+            title: 'Pricing Title',
+            type: 'string'
+        }),
+        defineField({
+            name: 'items',
+            title: 'Pricing Items',
+            type: 'array',
+            of: [{ type: 'pricingItem' }],
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: 'total',
+            title: 'Total Price',
+            type: 'number',
+        })
+    ]
+})
+
+### objects/slide.ts
+export const slide = defineType({
+    name: 'slide',
+    title: 'Slide',
+    type: 'object',
+    fields: [
+        defineField({
+            name: 'title',
+            title: 'Slide Title',
+            type: 'string',
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: 'description',
+            title: 'Slide Description',
+            type: 'array',
+            of: [{ type: 'block' }],
+        }),
+        defineField({
+            name: 'image',
+            title: 'Slide Image',
+            type: 'image',
+            options: { hotspot: true },
+            fields: [
+                defineField({
+                    name: 'alt',
+                    title: 'Alt Text',
+                    type: 'string'
+                })
+            ]
+        })
+    ],
+    preview: {
+        select: {
+            title: 'title',
+            media: 'image',
+        }
+    }
+})
+
+### objects/pricingItem.ts
+export const pricingItem = defineType({
+    name: 'pricingItem',
+    title: 'Pricing Item',
+    type: 'object',
+    fields: [
+        defineField({
+            name: 'name',
+            title: 'Service Name',
+            type: 'string',
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: 'description',
+            title: 'Description',
+            type: 'array',
+            of: [{ type: 'block' }]
+        }),
+        defineField({
+            name: 'price',
+            title: 'Price',
+            type: 'number',
+        }),
+        defineField({
+            name: 'currency',
+            title: 'Currency',
+            type: 'string',
+            options: {
+                list: [
+                    {
+                        value: 'usd',
+                        title: 'USD'
+                    },
+                    {
+                        value: 'mxn',
+                        title: 'MXN'
+                    }
+                ]
+            }
+        })
+    ],
+    preview: {
+        select: {
+            title: 'name',
+            subtitle: 'price'
+        }
+    }
+})
+
+### blocks/index.ts
+export const blockTypes = [
+    textBlock,
+    tableBlock,
+    sliderBlock,
+    pricingBlock,
+    subSectionBlock
+]
+
+### app/lib/queries/proposal.ts
 export const proposalQuery = groq`
 *[_type == "proposal" && slug.current == $slug][0]{
   _id,
@@ -68,347 +469,76 @@ export const proposalQuery = groq`
 
   sections[]{
     _key,
-    type,
+    _type,
     title,
 
     blocks[]{
-      _key,
-      _type,
-
-      _type == "textBlock" => {
-        title,
-        content
-      },
-
-      _type == "imageBlock" => {
-        asset,
-        caption
-      },
-
-      _type == "tableBlock" => {
-        table{
-          rows[]{
+     ${blockProjection}
+    }
+  }
+}
+`
+### app/lib/queries/block.ts
+export const blockProjection = `
+    _key,
+    _type,
+    title,
+    content,
+    caption,
+    asset->{
+        _id,
+        url,
+        metadata{
+            lqip,
+            dimensions
+        }
+    },
+    table{
+        rows[]{
             _key,
             cells
-          }
         }
-      },
-
-      _type == "subSectionBlock" => {
+    },
+    blocks[]{
+        _key,
+        _type,
         title,
         content,
-        blocks[]{
-          _key,
-          _type,
-
-          _type == "textBlock" => {
-            title,
-            content
-          },
-
-          _type == "tableBlock" => {
-            table{
-              rows[]{
-                _key,
-                cells
-              }
+        caption,
+        asset->{
+            _id,
+            url,
+            metadata{
+                lqip,
+                dimensions
             }
-          },
-
-          _type == "imageBlock" => {
-            asset,
-            caption
         },
+        table{
+            rows[]{
+                _key,
+                cells,
+            }
+        },
+        blocks[]{
+            _key,
+            _type,
+            title,
+            content,
+            caption,
+            asset->{
+                _id,
+                url,
+                metadata{
+                    lqip,
+                    dimensions
+                }
+            },
+            table{
+                rows[]{
+                    _key,
+                    cells
+                }
+            }
         }
-      }
     }
-  }
-}
-### types/section.ts
-export type Section = {
-    _key: string;
-    type: SectionType;
-    title?: string;
-    blocks: Block[];
-}
-
-export type SectionType =
-  | "hero"
-  | "summary"
-  | "context"
-  | "workPlan"
-  | "system"
-  | "strategy"
-  | "quotation"
-  | "conditions"
-  | "whyUs"
-
-### types/block.ts
-export type TextBlockType = {
-  _key: string;
-  _type: "textBlock";
-  title?: string;
-  content: PortableTextBlock[];
-}
-
-export type ImageBlockType = {
-  _key: string;
-  _type: "imageBlock";
-  asset: any;
-  caption?: string;
-}
-
-export type TableBlockType = {
-  _key: string;
-  _type: "tableBlock";
-  table: Table;
-}
-
-export type SubSectionBlockType = {
-  _key: string;
-  _type: "subSectionBlock";
-  title?: string;
-  content?: PortableTextBlock[];
-  blocks?: Block[];
-}
-
-export type Block =
-  | TextBlockType
-  | ImageBlockType
-  | TableBlockType
-  | SubSectionBlockType
-
-### types/proposal.ts
-export type Proposal = {
-  _id: string;
-  title: string
-  slug: string
-  meta: {
-    date: string
-    industry?: string
-    location?: string
-    tags?: string[]
-  }
-  sections: Section[]
-}
-
-### types/table.ts
-export type TableRow = {
-    _key: string;
-    cells: string[];
-};
-
-export type Table = {
-    rows: TableRow[];
-}
-
-### lib/table-helper.ts
-export function tableHelper(table: Table) {
-  if (!table?.rows?.length) {
-    return { 
-      columns: [], 
-      data: [] 
-    };
-  }
-
-  const [headerRow, ...bodyRows] = table.rows;
-
-  const columns: ColumnDef<Record<string, string>>[] =
-    headerRow.cells.map((header, index) => ({
-      accessorKey: `col${index}`,
-      header
-    }))
-
-  const data = bodyRows.map((row) => {
-    const obj: Record<string, string> = {};
-
-    row.cells.forEach((cell, i) => {
-      obj[`col${i}`] = cell;
-    });
-
-    return obj;
-  });
-
-  return { columns, data };
-}
-
-### hooks/useGetProposal.ts
-export async function getProposal(
-    slug:string
-): Promise<Proposal | null> {
-    return client.fetch<Proposal | null>(proposalQuery, { slug });
-};
-
-### components/section-renderer.tsx
-interface Props {
-    section: Section;
-    proposal: Proposal;
-}
-
-const sectionRegistry = {
-    hero: HeroSection
-}
-
-export function SectionRenderer({ section, proposal }: Props) {
-    const Component = sectionRegistry[section.type] || DefaultSection
-    
-    return (
-        <Component section={section} proposal={proposal}/>
-    )
-}
-
-### components/block-renderer.tsx
-interface Props {
-    block: Block;
-};
-
-export function BlockRenderer ({ block }: Props){
-    switch (block._type) {
-        case 'textBlock':
-            return <TextBlock block={block}/>;
-
-        case 'tableBlock':
-            return <TableBlock block={block}/>
-
-        case 'subSectionBlock':
-            return <SubSectionBlock block={block}/>
-    
-        default:
-            return null;
-    }
-}
-
-### components/blocks/subsection-block.ts
-interface Props {
-  block: SubSectionBlockType;
-}
-
-export function SubSectionBlock({ block }: Props) {
-  return (
-    <div className="space-y-6">
-      {block.title && (
-            <h2 className="text-lg font-medium">{block.title}</h2>
-       )}
-      {block.content && (
-        <PortableText value={block.content} />
-        )}
-      {block.blocks?.length ? (
-        <div className="space-y-4">
-          {block.blocks.map((child) => (
-            <BlockRenderer key={child._key} block={child} />
-          ))}
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-### components/blocks/table-block.ts
-interface Props {
-    block: TableBlockType
-}
-
-export function TableBlock({ block }: Props) {
-    const { columns, data } = tableHelper(block.table)
-
-    return (
-        <DataTable
-            columns={columns}
-            data={data}
-        />
-    );
-}
-
-### components/data-table.tsx
-interface DataTableProps<TData> {
-  columns: ColumnDef<TData>[]
-  data: TData[]
-}
-
-export function DataTable<TData>({
-  columns,
-  data
-}: DataTableProps<TData>) {
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel()
-  })
-
-  return (
-    <div className="rounded-md border">
-
-      <Table>
-
-        <TableHeader>
-          {table.getHeaderGroups().map(headerGroup => (
-            <TableRow key={headerGroup.id}>
-
-              {headerGroup.headers.map(header => (
-                <TableHead key={header.id}>
-
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-
-                </TableHead>
-              ))}
-
-            </TableRow>
-          ))}
-        </TableHeader>
-
-        <TableBody>
-          {table.getRowModel().rows.map(row => (
-            <TableRow key={row.id}>
-
-              {row.getVisibleCells().map(cell => (
-                <TableCell key={cell.id}>
-
-                  {flexRender(
-                    cell.column.columnDef.cell,
-                    cell.getContext()
-                  )}
-
-                </TableCell>
-              ))}
-
-            </TableRow>
-          ))}
-        </TableBody>
-
-      </Table>
-
-    </div>
-  )
-}
-
-## app/blueprint/[slug]/page.tsx
-export default async function Page({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }> 
-}) {
-  const { slug } = await params;
-  const data = await getProposal(slug);
-
-  if (!data) {
-    return <p>Proposal Not Found</p>
-  };
-
-  return (
-    <main className="flex flex-col space-y-10">
-      {data.sections.map((section) => (
-        <SectionRenderer
-          key={section._key}
-          section={section}
-          proposal={data}
-        />
-      ))}
-    </main>
-  );
-}
+`

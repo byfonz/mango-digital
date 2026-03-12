@@ -1,4 +1,4 @@
-import { Section } from "@/types/section";
+import { Section } from "@/types/documents/section";
 import { BlockRenderer } from "../block-renderer";
 import { Proposal } from "@/types/proposal";
 import { Block, TextBlockType } from "@/types/block";

@@ -1,4 +1,4 @@
-import { Section } from "@/types/section";
+import { Section } from "@/types/documents/section";
 import { BlockRenderer } from "../block-renderer";
 
 export function DefaultSection({ section }: { section: Section}) {

@@ -1,9 +1,6 @@
 import {defineField, defineType} from 'sanity'
-import { textBlock } from '../blocks/textBlock'
-import { tableBlock } from '../blocks/tableBlock'
-import { imageBlock } from '../blocks/imageBlock'
-import { subSectionBlock } from '../blocks/subsection'
-import { sliderBlock } from '../blocks/sliderBlock'
+import { blockTypes } from '../blocks'
+import { SECTION_TYPE_LABELS } from '../../constants/sectionTypes'
 
 export const sectionType = defineType({
   name: 'section',
@@ -19,7 +16,7 @@ export const sectionType = defineType({
         list: [
           {
             title: 'Introduction',
-            value: 'hero',
+            value: 'introduction',
           },
           {
             title: 'Executive Summary',
@@ -61,13 +58,19 @@ export const sectionType = defineType({
       name: 'blocks', 
       title: 'Blocks',
       type: 'array',
-      of: [
-        textBlock, 
-        tableBlock, 
-        imageBlock,
-        sliderBlock,
-        subSectionBlock
-      ],
+      of: blockTypes,
     }),
   ],
+  preview: {
+    select: {
+      type: 'type',
+      blocks: 'blocks'
+    },
+    prepare({ type, blocks }) {
+    return {
+      title: SECTION_TYPE_LABELS[type] ?? "Section",
+      subtitle: `${blocks?.length ?? 0} blocks`
+    }
+  }
+  }
 })

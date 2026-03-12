@@ -1,11 +1,9 @@
-import { defineField } from "sanity";
-import { textBlock } from "./textBlock";
-import { tableBlock } from "./tableBlock";
-import { imageBlock } from "./imageBlock";
+import { defineType, defineField } from "sanity";
+import { blockTypes } from ".";
 
-export const subSectionBlock = defineField({
+export const subsectionBlock = defineType({
     name: 'subsectionBlock',
-    title: 'Sub-Section Block',
+    title: 'SubSection Block',
     type: 'object',
     fields: [
         //Title
@@ -26,11 +24,7 @@ export const subSectionBlock = defineField({
             name: 'blocks',
             title: 'Blocks',
             type: 'array',
-            of: [
-                textBlock,
-                tableBlock,
-                imageBlock
-            ]
+            of: blockTypes
         })
     ]
 })

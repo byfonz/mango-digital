@@ -1,20 +1,27 @@
-import { defineField } from "sanity";
+import { defineField, defineType } from "sanity";
 
-export const imageBlock = defineField({
+export const imageBlock = defineType({
     name: 'imageBlock',
     title: 'Image Block',
     type: 'object',
     fields: [
-        {
+        defineField({
             name: 'image',
             title: 'Image',
             type: 'image',
-            options: { hotspot: true }
-        },
-        {
+            options: { hotspot: true },
+            fields: [
+                {
+                    name: 'alt',
+                    title: 'Alt Title',
+                    type: 'string'
+                }
+            ]
+        }),
+        defineField({
             name: 'caption',
             title: 'Image Caption',
             type: 'string'
-        }
+        })
     ],
 })

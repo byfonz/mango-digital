@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Table } from "@/types/table";
+import { Table } from "@/types/objects/table";
 
 export function tableHelper(table: Table) {
   if (!table?.rows?.length) {
