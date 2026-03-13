@@ -1,3 +1,4 @@
+import { urlFor } from "@/lib/sanity-image";
 import { NavMenuType } from "@/types/documents/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,16 +8,22 @@ interface Props {
 }
 
 export function ProposalHeader({ nav }: Props) {
+  const logo = nav?.logo;
+
+  const imageUrl = logo
+      ? urlFor(logo).width(296).height(112).fit('fill').url()
+      : null
+
   return (
-    <header className="flex items-center py-4 px-6 mx-auto justify-between">
+    <header className="flex items-center py-4 px-6 max-w-7xl justify-between">
       {/* Logo */}
-      {nav?.logo?.url && (
+      {imageUrl && (
         <Link href='/'>
           <Image
-            src={nav.logo.url}
-            alt={nav.title ?? ""}
+            src={imageUrl}
+            alt=''
             width={120}
-            height={40}
+            height={120}
             className="object-contain"
             priority
           />

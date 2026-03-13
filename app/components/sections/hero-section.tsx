@@ -4,43 +4,49 @@ import type { Proposal } from "@/types/documents/proposal";
 import { LucideCalendar } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
+import { urlFor } from "@/lib/sanity-image";
 interface Props {
   section: Section;
   proposal: Proposal;
 }
 
 export function HeroSection({ section, proposal }: Props) {
-  const image = proposal.coverImage?.asset;
+  const coverImage = proposal.coverImage;
+  const date = proposal.meta?.date;
+  const tags =  proposal.meta?.tags;
+
+  const imageUrl = coverImage
+    ? urlFor(coverImage).width(2000).height(420).fit("crop").url()
+    : null
 
   return (
     <section>
       {/* Cover Image */}
-      {image?.url && (
-        <div className="relative w-full h-96 overflow-hidden rounded-lg">
+      {imageUrl && (
+        <div className=" w-full h-[420px] overflow-hidden rounded-lg">
           <Image
-            src={image.url}
-            alt={proposal.title}
-            height={428}
+            src={imageUrl}
+            alt=''
             fill
             priority
             className="object-cover"
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, 1200px"
           />
         </div>
       )}
       {/* Meta */}
-      <div className="flex items-center gap-x-6 text-xs text-muted-foreground">
+      <div className="flex items-center gap-x-6 text-xs">
         {/* Date */}
-        {proposal.meta?.date && (
+        {date && (
           <span className="flex items-center gap-1 text-xs">
             <LucideCalendar size={12} />
-            {proposal.meta?.date}
+            {date}
           </span>
         )}
         {/* Tags */}
-        {proposal.meta?.tags && (
+        {tags && (
           <Badge variant='outline' className="text-xs">
-            {proposal.meta?.tags}
+            {tags}
           </Badge>
         )}
       </div>
