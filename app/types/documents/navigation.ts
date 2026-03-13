@@ -1,15 +1,14 @@
-export type NavigationType = {
+import { ImageAssetType } from "../objects/image-item";
+import { NavMenuItem } from "../objects/navigation-item";
+
+export type NavMenuType = {
+    _id: string;
     title: string;
-    items: NavigationItem[];
+    slug: string;
+    logo?: {
+        url: string;
+    };
+    items: NavMenuItem[];
 }
 
-export type NavigationItem = {
-    label: string;
-    href: string;
-    children: NavigationObject[];
-}
 
-export type NavigationObject = {
-    label: string;
-    href: string;
-}

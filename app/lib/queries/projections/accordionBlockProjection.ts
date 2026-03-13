@@ -1,4 +1,4 @@
-import { nestedBlockProjection } from "../projections/nestedBlockProjection";
+import { nestedBlockProjection } from "./nestedBlockProjection";
 
 export const accordionBlockProjection = `
 _type == 'accordionBlock' => {

@@ -18,6 +18,9 @@ import { pricingItem } from "./objects/pricingItem";
 import { sectionType } from "./objects/section";
 import { slideItem } from "./objects/slideItem";
 import { timelineItem } from "./objects/timelineItem";
+import { tabBlock } from "./blocks/tabBlock";
+import { tabItem } from "./objects/tabItem";
+import { navigationItem } from "./objects/navigationItem";
 
 export const schemaTypes = [
     //Documents
@@ -31,13 +34,16 @@ export const schemaTypes = [
     tableBlock,
     galleryBlock,
     sliderBlock,
+    tabBlock,
     accordionBlock,
     featureBlock,
     pricingBlock,
     timelineBlock,
     subsectionBlock,
     //Items
+    navigationItem,
     slideItem,
+    tabItem,
     accordionItem,
     buttonItem,
     featureItem,

@@ -12,56 +12,23 @@ export const navigationType = defineType({
             validation: (rule) => rule.required(),
         }),
         defineField({
+            name: 'slug',
+            title: 'Slug',
+            type: 'slug',
+            options: {source: 'title'},
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: 'logo',
+            title: 'Menu Logo',
+            type: 'image',
+            options: { hotspot: true }
+        }),
+        defineField({
             name: 'items',
             title: 'Navigation Menu Items',
             type: 'array',
-            of: [
-                {
-                    name: 'navItem',
-                    title: 'Nav Item',
-                    type: 'object',
-                    fields: [
-                        {
-                            name: 'label',
-                            title: 'Label',
-                            type: 'string'
-                        },
-                        {
-                            name: 'href',
-                            title: 'Link',
-                            type: 'url'
-                        },
-                        {
-                            name: 'children',
-                            title: 'Label',
-                            type: 'array',
-                            of: [
-                                {
-                                    type: 'object',
-                                    fields: [
-                                        {
-                                            name: 'label',
-                                            title: 'Label',
-                                            type: 'string'
-                                        },
-                                        {
-                                            name: 'href',
-                                            title: 'Link',
-                                            type: 'string'
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+            of: [{ type: 'navigationItem' }]
         }),
-        defineField({
-            name: 'description',
-            title: 'Timeline Description',
-            type: 'array',
-            of: [{ type: 'block' }]
-        })
     ]
 })

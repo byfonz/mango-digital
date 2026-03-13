@@ -1,15 +1,10 @@
 import { defineField, defineType } from "sanity";
 
-export const accordionItem = defineType({
-    name: 'accordionItem',
-    title: 'Accordion Item',
+export const tabItem = defineType({
+    name: 'tabItem',
+    title: 'Tab Item',
     type: 'object',
     fields: [
-        defineField({
-            name: 'title',
-            title: 'Accordion Title',
-            type: 'string',
-        }),
         defineField({
             name: 'content',
             title: 'Accordion Content',
@@ -27,6 +22,9 @@ export const accordionItem = defineType({
                 {
                     type: 'sliderBlock'
                 },
+                {
+                    type: 'featureBlock'
+                }
             ]
         })
     ]

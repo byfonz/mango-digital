@@ -1,7 +1,7 @@
-import type { Block } from "../blocks";
+import type { NestedBlock } from "../blocks";
 
 export type AccordionItemType = {
     _key: string;
     title: string;
-    content: Block[];
+    content: NestedBlock[];
 }

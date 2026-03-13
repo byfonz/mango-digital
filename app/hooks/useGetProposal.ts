@@ -1,6 +1,6 @@
 import { proposalQuery } from "@/lib/queries/proposal"
 import { client } from "@/lib/sanity"
-import { Proposal } from "@/types/proposal";
+import { Proposal } from "@/types/documents/proposal";
 
 export async function getProposal(
     slug:string

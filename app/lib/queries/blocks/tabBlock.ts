@@ -1,14 +1,14 @@
 import { nestedBlockProjection } from "../projections/nestedBlockProjection";
 
-export const accordionBlockProjection = `
-_type == 'accordionBlock' => {
+export const tabBlockProjection = `
+_type == 'tabBlock' => {
     _key,
     _type,
     title,
     items[]{
         _key,
         title,
-        content[]{
+        blocks[]{
             ${nestedBlockProjection}
         }
     }

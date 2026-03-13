@@ -15,6 +15,9 @@ export const blockTypes = [
         type: 'sliderBlock'
     },
     {
+        type: 'tabBlock'
+    },
+    {
         type: 'accordionBlock'
     },
     {

@@ -1,3 +1,4 @@
+import { AccordionBlockType } from "./accordionBlock";
 import { ImageBlockType } from "./imageBlock";
 import { SliderBlockType } from "./sliderBlock";
 import { SubSectionBlockType } from "./subsectionBlock";
@@ -9,4 +10,12 @@ export type Block =
   | ImageBlockType
   | TableBlockType
   | SliderBlockType
+  | AccordionBlockType
   | SubSectionBlockType
+
+
+export type NestedBlock =
+  | TextBlockType
+  | ImageBlockType
+  | TableBlockType
+  | SliderBlockType

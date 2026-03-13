@@ -49,24 +49,8 @@ Backend / CMS
 - Recommended Folder Structure
 - Include production-ready code examples.
 
-## Errors
-- Currently having the same error in section and subsection type
-- Type '(({ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... ...' is not assignable to type 'ArrayOfType<"string" | "number" | "boolean" | "object" | "array" | "block" | "date" | "datetime" | "document" | "file" | "geopoint" | "image" | "reference" | "crossDatasetReference" | "globalDocumentReference" | "slug" | "text" | "url" | "email", undefined>[]'.
-  Type '({ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... & { ...; }) | ({ ...; } & ... 1 more ... &...' is not assignable to type 'ArrayOfType<"string" | "number" | "boolean" | "object" | "array" | "block" | "date" | "datetime" | "document" | "file" | "geopoint" | "image" | "reference" | "crossDatasetReference" | "globalDocumentReference" | "slug" | "text" | "url" | "email", undefined>'.
-    Type '{ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }' is not assignable to type 'ArrayOfType<"string" | "number" | "boolean" | "object" | "array" | "block" | "date" | "datetime" | "document" | "file" | "geopoint" | "image" | "reference" | "crossDatasetReference" | "globalDocumentReference" | "slug" | "text" | "url" | "email", undefined>'.
-      Type '{ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }' is not assignable to type '(Omit<ArrayOfEntry<ObjectDefinition>, "validation" | "initialValue"> & { validation?: SchemaValidationValue; initialValue?: any; }) | ArrayOfEntry<...>'.
-        Type '{ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }' is not assignable to type 'Omit<ArrayOfEntry<ObjectDefinition>, "validation" | "initialValue"> & { validation?: SchemaValidationValue; initialValue?: any; }'.
-          Type '{ type: "object"; name: "textBlock"; } & Omit<ObjectDefinition, "preview"> & { preview?: PreviewConfig<Record<string, string>, Record<never, any>> | undefined; }' is not assignable to type '{ validation?: SchemaValidationValue; initialValue?: any; }'.
-            Types of property 'validation' are incompatible.
-              Type 'ValidationBuilder<ObjectRule, Record<string, unknown>> | undefined' is not assignable to type 'SchemaValidationValue'.
-                Type 'ValidationBuilder<ObjectRule, Record<string, unknown>>' is not assignable to type 'SchemaValidationValue'.
-                  Type 'ValidationBuilder<ObjectRule, Record<string, unknown>>' is not assignable to type '(rule: Rule, context?: ValidationContext | undefined) => SchemaValidationValue'.
-                    Type 'RuleBuilder<ObjectRule, Record<string, unknown>>' is not assignable to type 'SchemaValidationValue'.
-                      Type 'ObjectRule' is not assignable to type 'SchemaValidationValue'.
-                        Type 'RuleDef<ObjectRule, Record<string, unknown>>' is missing the following properties from type 'Rule': _type, _level, _required, _typeDef, and 33 more.
-
 ## Codebase
-### documents/proposal.tsx
+### cms/proposal.tsx
 export const proposalType = defineType({
   name: 'proposal',
   title: 'Proposals',

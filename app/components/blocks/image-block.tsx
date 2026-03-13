@@ -6,19 +6,18 @@ interface Props {
 };
 
 export function ImageBlock({ block }: Props) {
-    if (!block.image.asset?.url) {
+    const image = block.image?.asset;
+    if (!image?.url) {
         return null
     };
 
-    const { url, metadata } = block.image.asset;
-
-    const width = metadata?.dimensions?.width ?? 1200;
-    const height = metadata?.dimensions?.height ?? 800;
+    const width = image.metadata?.dimensions?.width ?? 1200;
+    const height = image.metadata?.dimensions?.height ?? 800;
 
     return (
         <figure className="space-y-2">
             <Image
-                src={url}
+                src={image.url}
                 alt={block.caption ?? "Image"}
                 width={width}
                 height={height}

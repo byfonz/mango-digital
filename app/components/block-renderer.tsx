@@ -4,6 +4,7 @@ import { SubSectionBlock } from "./blocks/subsection-block";
 import { TableBlock } from "./blocks/table-block";
 import { ImageBlock } from "./blocks/image-block";
 import { SliderBlock } from "./blocks/slider-block";
+import { AccordionBlock } from "./blocks/accordion-block";
 interface Props {
     block: Block;
 };
@@ -21,6 +22,9 @@ export function BlockRenderer ({ block }: Props){
 
         case 'sliderBlock':
             return <SliderBlock block={block}/>
+
+        case 'accordionBlock':
+            return <AccordionBlock block={block}/>
 
         case 'subsectionBlock':
             return <SubSectionBlock block={block}/>

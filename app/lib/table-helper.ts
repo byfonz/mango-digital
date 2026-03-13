@@ -1,7 +1,7 @@
+import { TableItemType } from "@/types/objects/table-item";
 import { ColumnDef } from "@tanstack/react-table";
-import { Table } from "@/types/objects/table-item";
 
-export function tableHelper(table: Table) {
+export function tableHelper(table: TableItemType) {
   if (!table?.rows?.length) {
     return { 
       columns: [], 
