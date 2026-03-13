@@ -1,13 +1,13 @@
 import { defineField, defineType } from "sanity";
 
-export const navigation = defineType({
+export const navigationType = defineType({
     name: 'navigation',
     title: 'Navigation Menu',
-    type: 'object',
+    type: 'document',
     fields: [
         defineField({
             name: 'title',
-            title: 'Timeline Title',
+            title: 'Menu Title',
             type: 'string',
             validation: (rule) => rule.required(),
         }),

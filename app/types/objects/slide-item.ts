@@ -1,10 +1,10 @@
 import { PortableTextBlock } from "next-sanity";
-import { ImageAsset } from "./image";
+import { ImageAssetType } from "./image-item";
 
-export type Slide = {
+export type SlideItemType = {
     title: string,
     description?: PortableTextBlock[];
     image?: {
-        asset: ImageAsset
+        asset: ImageAssetType;
     } 
 }

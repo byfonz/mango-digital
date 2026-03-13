@@ -22,6 +22,12 @@ export const timelineItem = defineType({
             title: 'Timeline Description',
             type: 'array',
             of: [{ type: 'block' }]
+        }),
+        defineField({
+            name: 'delivarables',
+            title: 'Delivarables',
+            type: 'array',
+            of: [{ type: 'slideItem' }]
         })
     ]
 })

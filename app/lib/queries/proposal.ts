@@ -1,5 +1,5 @@
 import { groq } from "next-sanity"
-import { blockProjection } from "./block"
+import { sectionProjection } from "./projections/sectionProjection"
 
 export const proposalQuery = groq`
 *[_type == "proposal" && slug.current == $slug][0]{
@@ -15,13 +15,7 @@ export const proposalQuery = groq`
   },
 
   sections[]{
-    _key,
-    _type,
-    title,
-
-    blocks[]{
-     ${blockProjection}
-    }
+    ${sectionProjection}
   }
 }
 `

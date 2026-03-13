@@ -1,12 +1,12 @@
 import { PortableTextBlock } from "next-sanity";
 
-export type PricingItem = {
+export type PricingItemType = {
     name: string;
     description?: PortableTextBlock[];
     price?: number;
-    currency?: Currency;
+    currency?: CurrencyType;
 }
 
-export type Currency = 
+export type CurrencyType = 
     | 'mxn'
     | 'usd'

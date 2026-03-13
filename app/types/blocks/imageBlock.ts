@@ -1,10 +1,10 @@
-import { ImageAsset } from "../objects/image";
+import { ImageAssetType } from "../objects/image-item";
 
 export type ImageBlockType = {
   _key: string;
   _type: "imageBlock";
   image: {
-    asset: ImageAsset;
+    asset: ImageAssetType;
     alt?: string;
   };
   caption?: string;

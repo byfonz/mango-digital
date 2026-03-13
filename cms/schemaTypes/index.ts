@@ -13,7 +13,7 @@ import { proposalType } from "./documents/proposal";
 import { accordionItem } from "./objects/accordionItem";
 import { buttonItem } from "./objects/buttonItem";
 import { featureItem } from "./objects/featureItem";
-import { navigation } from "./objects/navigation";
+import { navigationType } from "./documents/navigation";
 import { pricingItem } from "./objects/pricingItem";
 import { sectionType } from "./objects/section";
 import { slideItem } from "./objects/slideItem";
@@ -24,7 +24,7 @@ export const schemaTypes = [
     proposalType,
     sectionType,
     authorType,
-    navigation,
+    navigationType,
     //Blocks
     textBlock,
     imageBlock,
