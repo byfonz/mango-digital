@@ -1,4 +1,4 @@
-import { TableBlockType } from "@/types/block";
+import type { TableBlockType } from "@/types/blocks/tableBlock";
 import { tableHelper } from "@/lib/table-helper";
 import { DataTable } from "../tables/data-table";
 interface Props {

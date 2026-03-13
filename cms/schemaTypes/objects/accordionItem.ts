@@ -1,4 +1,6 @@
 import { defineField, defineType } from "sanity";
+import { textBlock } from "../blocks/textBlock";
+import { imageBlock } from "../blocks/imageBlock";
 
 export const accordionItem = defineType({
     name: 'accordionItem',
@@ -14,7 +16,23 @@ export const accordionItem = defineType({
             name: 'content',
             title: 'Accordion Content',
             type: 'array',
-            of: [{ type: 'block' }]
+            of: [
+                {
+                    type: 'textBlock'
+                },
+                {
+                    type: 'imageBlock'
+                },
+                {
+                    type: 'tableBlock'
+                },
+                {
+                    type: 'sliderBlock'
+                },
+                {
+                    type: 'featureBlock'
+                }
+            ]
         })
     ]
 })

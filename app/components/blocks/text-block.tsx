@@ -1,7 +1,8 @@
 "use client";
 
-import { TextBlockType } from "@/types/block";
+import type { TextBlockType } from "@/types/blocks/textBlock";
 import { PortableText } from "next-sanity";
+import { Badge } from "../ui/badge";
 
 interface Props {
   block: TextBlockType;
@@ -10,7 +11,11 @@ interface Props {
 export function TextBlock({ block }: Props) {
   return (
     <div className="prose max-w-none space-y-3">
-      {block.title && <h2>{block.title}</h2>}
+      {block.title && (
+        <Badge variant='outline' className="uppercase">
+          {block.title}
+        </Badge>
+      )}
       <PortableText
         value={block.content}
         components={{

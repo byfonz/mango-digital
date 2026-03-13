@@ -4,7 +4,7 @@ export type Section = {
     _key: string;
     type: SectionType;
     title?: string;
-    blocks: Block[];
+    blocks?: Block[];
 }
 
 export type SectionType =

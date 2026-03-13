@@ -1,6 +1,6 @@
 import { PortableText } from "next-sanity";
 import { BlockRenderer } from "../block-renderer";
-import { SubSectionBlockType } from "@/types/block";
+import type { SubSectionBlockType } from "@/types/blocks/subsectionBlock";
 
 interface Props {
   block: SubSectionBlockType;

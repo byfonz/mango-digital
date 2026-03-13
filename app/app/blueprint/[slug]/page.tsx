@@ -1,5 +1,6 @@
 import { SectionRenderer } from "@/components/section-renderer";
 import { getProposal } from "@/hooks/useGetProposal";
+import { Section } from "@/types/documents/section";
 
 export default async function Page({ 
   params 
@@ -17,7 +18,7 @@ export default async function Page({
 
   return (
     <main className="flex flex-col space-y-10">
-      {data.sections.map((section) => (
+      {data.sections.map((section: Section) => (
         <SectionRenderer
           key={section._key}
           section={section}
