@@ -1,26 +1,26 @@
 import {defineField, defineType} from 'sanity';
 
-export const pricingItem = defineType({
-    name: 'pricingItem',
-    title: 'Pricing Item',
+export const pricingPlan = defineType({
+    name: 'pricingPlan',
+    title: 'Pricing Plan',
     type: 'object',
     fields: [
         defineField({
             name: 'name',
-            title: 'Service Name',
+            title: 'Plan Name',
             type: 'string',
             validation: (rule) => rule.required(),
-        }),
-        defineField({
-            name: 'description',
-            title: 'Description',
-            type: 'array',
-            of: [{ type: 'block' }]
         }),
         defineField({
             name: 'price',
             title: 'Price',
             type: 'number',
+        }),
+        defineField({
+            name: 'features',
+            title: 'Features',
+            type: 'array',
+            of: [{ type: 'featureItem' }]
         }),
         defineField({
             name: 'currency',

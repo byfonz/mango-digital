@@ -11,23 +11,42 @@ import { timelineBlock } from "./blocks/timelineBlock";
 import { authorType } from "./documents/author";
 import { proposalType } from "./documents/proposal";
 import { accordionItem } from "./objects/accordionItem";
-import { buttonItem } from "./objects/buttonItem";
+import { button } from "./objects/button";
 import { featureItem } from "./objects/featureItem";
 import { navigationType } from "./documents/navigation";
-import { pricingItem } from "./objects/pricingItem";
+import { pricingPlan } from "./objects/pricingPlan";
 import { sectionType } from "./objects/section";
 import { slideItem } from "./objects/slideItem";
 import { timelineItem } from "./objects/timelineItem";
 import { tabBlock } from "./blocks/tabBlock";
 import { tabItem } from "./objects/tabItem";
 import { navigationItem } from "./objects/navigationItem";
+import { heroSection } from "./sections/heroSection";
+import { pricingSection } from "./sections/pricingSection";
+import { ctaSection } from "./sections/ctaSection";
+import { faqSection } from "./sections/faqSection";
+import { faqItem } from "./objects/faqItem";
+import { pageType } from "./documents/page";
+import { postType } from "./documents/post";
+import { caseStudy } from "./documents/caseStudy";
+import { link } from "./objects/link";
+import { serviceSection } from "./sections/serviceSection";
 
 export const schemaTypes = [
     //Documents
+    pageType,
+    postType,
     proposalType,
+    caseStudy,
     sectionType,
     authorType,
     navigationType,
+    //Sections
+    heroSection,
+    serviceSection,
+    pricingSection,
+    faqSection,
+    ctaSection,
     //Blocks
     textBlock,
     imageBlock,
@@ -40,13 +59,15 @@ export const schemaTypes = [
     pricingBlock,
     timelineBlock,
     subsectionBlock,
-    //Items
+    //Objects
+    link,
     navigationItem,
     slideItem,
     tabItem,
     accordionItem,
-    buttonItem,
+    faqItem,
+    button,
     featureItem,
-    pricingItem,
+    pricingPlan,
     timelineItem
 ]

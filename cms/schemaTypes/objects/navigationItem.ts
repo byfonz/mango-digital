@@ -5,29 +5,30 @@ export const navigationItem = defineType({
     title: 'Navigation Item',
     type: 'object',
     fields: [
+        //Label
         defineField({
             name: 'label',
+            title: 'Label',
             type: 'string',
         }),
+        //Icon
         defineField({
-            name: 'href',
+            name: 'icon',
+            title: 'Icon',
             type: 'string'
         }),
+        //Link
         defineField({
-            name: 'target',
-            type: 'string',
-            options:{
-                list: [
-                    {
-                        title: 'Same Tab',
-                        value: '_self'
-                    },
-                    {
-                        title: 'New Tab',
-                        value: '_blank'
-                    }
-                ]
-            }
+            name: 'link',
+            title: 'Link',
+            type: 'link'
+        }),
+        //DropDown Item
+        defineField({
+            name: 'children',
+            title: 'Dropdown Menu',
+            type: 'array',
+            of: [{ type: 'navigationItem' }]
         })
     ]
 })

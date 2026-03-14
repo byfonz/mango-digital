@@ -14,7 +14,7 @@ export const pricingBlock = defineType({
             name: 'items',
             title: 'Pricing Items',
             type: 'array',
-            of: [{ type: 'pricingItem' }],
+            of: [{ type: 'pricingPlan' }],
             validation: (rule) => rule.required(),
         }),
         defineField({

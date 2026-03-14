@@ -13,11 +13,10 @@ Review my current implementation and help me design a clean, scalable, productio
 Sanity → GROQ → TypeScript types → React rendering system
 
 The final solution should:
-- follow best practices
-- have strong typing
-- support extensible block rendering
-- separate data logic from UI
-- be maintainable as the project grows
+- Follow development and software design best practices
+- Have strong typing
+- Separate data logic from UI
+- Be maintainable as the project grows
 
 ## Tech Stack
 Frontend
@@ -32,497 +31,190 @@ Backend / CMS
 
 ## Instructions
 1. Analyze the provided code, explain the problems clearly and identify:
-    - schema inconsistencies
-    - type mismatches
+    - Schema inconsistencies
+    - Type mismatches
     - GROQ issues
-    - rendering architecture problems
-    - scalability issues
-2. Help me render the SubSectionBlock and TableBlock.
-3. Suggest schema types that can be useful in the system.
+    - Architecture problems
+    - Scalability issues
+2. Help me render the SubSectionBlock.
 
 ## Output Format
 - Structure your response in the following order:
 - Architecture Issues Found
-- Schema Improvements
-- TypeScript Improvements
-- Improved GROQ Query
+- Improvements
 - Recommended Folder Structure
-- Include production-ready code examples.
+- Production-ready code examples.
 
 ## Codebase
-### cms/proposal.tsx
-export const proposalType = defineType({
-  name: 'proposal',
-  title: 'Proposals',
-  type: 'document',
-  fields: [
-    //Client Name
-    defineField({
-      name: 'title',
-      title: 'Client Name',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
-    //Slug
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {source: 'title'},
-      validation: (rule) => rule.required(),
-    }),
-    //Meta
-    defineField({
-      name: 'meta',
-      title: 'Meta',
-      type: 'object',
-      fields: [
-        //Author
-        defineField({
-          name: 'author',
-          title: 'Author',
-          type: 'string',
-        }),
-        //Date
-        defineField({
-          name: 'date',
-          title: 'Date',
-          type: 'date',
-          validation: (rule) => rule.required(),
-        }),
-        //Tags
-        defineField({
-          name: 'tags',
-          title: 'Tags',
-          type: 'array',
-          of: [{type: 'string'}],
-          options: {layout: 'tags'},
-        }),
-      ],
-    }),
-    //Sections
-    defineField({
-      name: 'sections',
-      title: 'Sections',
-      type: 'array',
-      of: [{ type: 'section' }],
-    }),
-  ],
-})
-
-### objects/section.ts
-export const sectionType = defineType({
-  name: 'section',
-  title: 'Section',
-  type: 'object',
-  fields: [
-    //Title
-    defineField({
-      name: 'title',
-      title: 'Section Title',
-      type: 'string',
-    }),
-    //Section
-    defineField({
-      name: 'type',
-      title: 'Section Type',
-      type: 'string',
-      options: {
-        list: [
-          {
-            title: 'Introduction',
-            value: 'hero',
-          },
-          {
-            title: 'Executive Summary',
-            value: 'summary',
-          },
-          {
-            title: 'Project Context',
-            value: 'context',
-          },
-          {
-            title: 'Work Plan',
-            value: 'workPlan',
-          },
-          {
-            title: 'System Architecture',
-            value: 'system',
-          },
-          {
-            title: 'Strategy',
-            value: 'strategy',
-          },
-          {
-            title: 'Quotation',
-            value: 'quotation',
-          },
-          {
-            title: 'Terms & Conditions',
-            value: 'conditions',
-          },
-          {
-            title: 'Why Us?',
-            value: 'whyUs',
-          },
-        ],
-      },
-    }),
-    //Blocks
-    defineField({
-      name: 'blocks', 
-      title: 'Blocks',
-      type: 'array',
-      of: blockTypes,
-    }),
-  ],
-})
-
-### blocks/textBlock.ts
-export const textBlock = defineType({
-    name: 'textBlock',
-    title: 'Text Block',
-    type: 'object',
-    fields:[
-        //Title
-        defineField({
-            name: 'title',
-            title: 'Section Title',
-            type: 'string'
-        }),
-        //Content
-        defineField({
-            name: 'content',
-            title: 'Section Content',
-            type: 'array',
-            of: [{ type: 'block' }]
-        }),
-    ]
-})
-
-### blocks/tableBlock.ts
-export const tableBlock = defineType({
-    name: 'tableBlock',
-    title: 'Table Block',
+### cms/blocks/accordionBlock.tsx
+export const accordionBlock = defineType({
+    name: 'accordionBlock',
+    title: 'Accordion Block',
     type: 'object',
     fields: [
         defineField({
             name: 'title',
-            title: 'Title',
-            type: 'string'
-        }),
-        defineField({
-            name: 'table',
-            title: 'Table',
-            type: 'table'
-        })
-    ]
-})
-
-### blocks/imageBlock.ts
-export const imageBlock = defineType({
-    name: 'imageBlock',
-    title: 'Image Block',
-    type: 'object',
-    fields: [
-        defineField({
-            name: 'image',
-            title: 'Image',
-            type: 'image',
-            options: { hotspot: true },
-            fields: [
-                {
-                    name: 'alt',
-                    title: 'Alt Title',
-                    type: 'string'
-                }
-            ]
-        }),
-        defineField({
-            name: 'caption',
-            title: 'Image Caption',
-            type: 'string'
-        })
-    ],
-})
-
-### blocks/subsectionBlock.ts
-export const subSectionBlock = defineType({
-    name: 'subsectionBlock',
-    title: 'Sub-Section Block',
-    type: 'object',
-    fields: [
-        //Title
-        defineField({
-            name: 'title',
-            title: 'SubSection Title',
+            title: 'Accordion Title',
             type: 'string',
-        }),
-        //Content
-        defineField({
-            name: 'content',
-            title: 'SubSection Content',
-            type: 'array',
-            of: [{ type: 'block' }]
-        }),
-        //Blocks
-        defineField({
-            name: 'blocks',
-            title: 'Blocks',
-            type: 'array',
-            of: [
-                textBlock,
-                imageBlock,
-                tableBlock,
-                sliderBlock
-            ]
-        })
-    ]
-})
-
-### blocks/SlideBlock.ts
-export const sliderBlock = defineType({
-    name: 'sliderBlock',
-    title: 'Slider Block',
-    type: 'object',
-    fields:[
-        defineField({
-            name: 'title',
-            title: 'Slider Title',
-            type: 'string'
-        }),
-        defineField({
-            name: 'slides',
-            title: 'Slides',
-            type: 'array',
-            of: [{ type: 'slide' }],
-            validation: (rule) => rule.required(),
-        })
-    ],
-    preview: {
-        select: {
-            title: 'title',
-            slides: 'slides',
-        },
-        prepare({ title, slides }) {
-            return {
-                title: title || 'Slider Block',
-                slides: `${slides?.length || 0} slides`
-            }
-        }
-    }
-})
-
-### blocks/pricingBlock.ts
-export const pricingBlock = defineType({
-    name: 'pricingBlock',
-    title: 'Pricing Block',
-    type: 'object',
-    fields: [
-        defineField({
-            name: 'name',
-            title: 'Pricing Title',
-            type: 'string'
         }),
         defineField({
             name: 'items',
-            title: 'Pricing Items',
+            title: 'Accordion Items',
             type: 'array',
-            of: [{ type: 'pricingItem' }],
-            validation: (rule) => rule.required(),
-        }),
-        defineField({
-            name: 'total',
-            title: 'Total Price',
-            type: 'number',
+            of: [{ type: 'accordionItem' }]
         })
     ]
 })
 
-### objects/slide.ts
-export const slide = defineType({
-    name: 'slide',
-    title: 'Slide',
+### cms/objects/accordionItem.tsx
+export const accordionItem = defineType({
+    name: 'accordionItem',
+    title: 'Accordion Item',
     type: 'object',
     fields: [
         defineField({
             name: 'title',
-            title: 'Slide Title',
+            title: 'Accordion Title',
             type: 'string',
-            validation: (rule) => rule.required(),
         }),
         defineField({
-            name: 'description',
-            title: 'Slide Description',
+            name: 'content',
+            title: 'Accordion Content',
             type: 'array',
-            of: [{ type: 'block' }],
-        }),
-        defineField({
-            name: 'image',
-            title: 'Slide Image',
-            type: 'image',
-            options: { hotspot: true },
-            fields: [
-                defineField({
-                    name: 'alt',
-                    title: 'Alt Text',
-                    type: 'string'
-                })
+            of: [
+                {
+                    type: 'textBlock'
+                },
+                {
+                    type: 'imageBlock'
+                },
+                {
+                    type: 'tableBlock'
+                },
+                {
+                    type: 'sliderBlock'
+                },
             ]
         })
-    ],
-    preview: {
-        select: {
-            title: 'title',
-            media: 'image',
-        }
-    }
+    ]
 })
 
-### objects/pricingItem.ts
-export const pricingItem = defineType({
-    name: 'pricingItem',
-    title: 'Pricing Item',
-    type: 'object',
-    fields: [
-        defineField({
-            name: 'name',
-            title: 'Service Name',
-            type: 'string',
-            validation: (rule) => rule.required(),
-        }),
-        defineField({
-            name: 'description',
-            title: 'Description',
-            type: 'array',
-            of: [{ type: 'block' }]
-        }),
-        defineField({
-            name: 'price',
-            title: 'Price',
-            type: 'number',
-        }),
-        defineField({
-            name: 'currency',
-            title: 'Currency',
-            type: 'string',
-            options: {
-                list: [
-                    {
-                        value: 'usd',
-                        title: 'USD'
-                    },
-                    {
-                        value: 'mxn',
-                        title: 'MXN'
-                    }
-                ]
-            }
-        })
-    ],
-    preview: {
-        select: {
-            title: 'name',
-            subtitle: 'price'
-        }
-    }
-})
-
-### blocks/index.ts
-export const blockTypes = [
-    textBlock,
-    tableBlock,
-    sliderBlock,
-    pricingBlock,
-    subSectionBlock
-]
-
-### app/lib/queries/proposal.ts
-export const proposalQuery = groq`
-*[_type == "proposal" && slug.current == $slug][0]{
-  _id,
-  title,
-  "slug": slug.current,
-
-  meta{
-    date,
-    industry,
-    location,
-    tags
-  },
-
-  sections[]{
+### lib/queries/blocks/accordionBlockProjection.ts
+export const accordionBlockProjection = `
+_type == 'accordionBlock' => {
     _key,
     _type,
     title,
-
-    blocks[]{
-     ${blockProjection}
+    items[]{
+        _key,
+        title,
+        blocks[]{
+            ${blockProjection}
+        }
     }
-  }
 }
 `
-### app/lib/queries/block.ts
+
+### types/projections/blockProjection.ts
 export const blockProjection = `
     _key,
     _type,
-    title,
-    content,
-    caption,
-    asset->{
-        _id,
-        url,
-        metadata{
-            lqip,
-            dimensions
-        }
-    },
-    table{
-        rows[]{
-            _key,
-            cells
-        }
-    },
+    ${textBlockProjection},
+    ${imageBlockProjection},
+    ${tableBlockProjection},
+    ${sliderBlockProjection},
+    ${accordionBlockProjection},
     blocks[]{
-        _key,
-        _type,
-        title,
-        content,
-        caption,
-        asset->{
-            _id,
-            url,
-            metadata{
-                lqip,
-                dimensions
-            }
-        },
-        table{
-            rows[]{
-                _key,
-                cells,
-            }
-        },
-        blocks[]{
-            _key,
-            _type,
-            title,
-            content,
-            caption,
-            asset->{
-                _id,
-                url,
-                metadata{
-                    lqip,
-                    dimensions
-                }
-            },
-            table{
-                rows[]{
-                    _key,
-                    cells
-                }
-            }
-        }
+        ...,
+        ${textBlockProjection},
+        ${imageBlockProjection},
+        ${tableBlockProjection},
+        ${sliderBlockProjection},
+        ${accordionBlockProjection}
     }
 `
+### types/blocks/accordionBlock.ts
+export type AccordionBlockType = {
+    _key: string;
+    _type: "accordionBlock";
+    title?: string;
+    items: AccordionItemType[];
+}
+
+### types/objects/accordion-item.ts
+export type AccordionItemType = {
+    _key: string;
+    title: string;
+    content: Block[];
+}
+
+### types/blocks/index.ts
+export type Block =
+  | TextBlockType
+  | ImageBlockType
+  | TableBlockType
+  | SliderBlockType
+  | AccordionBlockType
+  | SubSectionBlockType
+
+
+export type NestedBlock =
+  | TextBlockType
+  | ImageBlockType
+  | TableBlockType
+  | SliderBlockType
+
+### components/blocks/accordion-block.ts
+interface Props {
+    block: AccordionBlockType;
+};
+
+export function AccordionBlock({ block }: Props) {
+    return (
+        <Accordion type="single">
+            {block.items?.map((item) => (
+                <AccordionItem key={item._key} value={item._key}>
+                    <AccordionTrigger>{item.title}</AccordionTrigger>
+                    <AccordionContent>
+                        {item.content?.map((block) => (
+                            <BlockRenderer
+                                key={block._key}
+                                block={block}
+                            />
+                        ))}
+                    </AccordionContent>
+                </AccordionItem>
+            ))}
+        </Accordion>
+    )
+}
+
+### blueprint/[slug]/page.tsx
+export default async function Page({ 
+  params 
+}: { 
+  params: Promise<{ slug: string }> 
+}) {
+  const { slug } = await params;
+  const data = await getProposal(slug);
+  const menu = await getMenu(slug);
+
+  if (!data) {
+    return <p>Proposal Not Found</p>
+  };
+
+  console.log(JSON.stringify(data.sections, null, 2))
+
+  return (
+    <main className="flex flex-col space-y-10">
+      <ProposalHeader nav={menu}/>
+      {data.sections.map((section: Section) => (
+        <SectionRenderer
+          key={section._key}
+          section={section}
+          proposal={data}
+        />
+      ))}
+    </main>
+  );
+}

@@ -19,7 +19,7 @@ export function SliderBlock({ block }: Props) {
                     key={slide._key}
                     className="border p-6 rounded-lg"
                     style={{
-                        backgroundImage: `${slide.image?.asset.url}`
+                        backgroundImage: `${slide.image}`
                     }}
                 >
                     {slide.title}
