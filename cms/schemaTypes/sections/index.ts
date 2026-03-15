@@ -1,17 +1,26 @@
 export const sectionTypes = [
     {
-        type: 'heroSection'
+        type: 'heroSection',
+        title: 'Hero Section',
     },
     {
-        type: 'serviceSection'
+        type: 'serviceSection',
+        title: 'Services Section',
     },
     {
-        type: 'pricingSection'
+        type: 'pricingSection',
+        title: 'Pricing Section',
     },
     {
-        type: 'faqSection'
+        type: 'faqSection',
+        title: 'FAQ Section',
     },
     {
-        type: 'ctaSection'
+        type: 'teamSection',
+        title: 'Team Section',
+    },
+    {
+        type: 'ctaSection',
+        title: 'CTA Section',
     },
 ]

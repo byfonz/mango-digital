@@ -27,5 +27,11 @@ export const pageType = defineType({
       type: 'array',
       of: sectionTypes,
     }),
+    //SEO
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    })
   ],
 })

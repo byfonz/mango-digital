@@ -11,29 +11,34 @@ export const heroSection = defineType({
             title: 'Heading',
             type: 'string',
         }),
+        //SubHeading
         defineField({
             name: 'subheading',
             title: 'SubHeading',
             type: 'string',
         }),
+        //Content
         defineField({
             name: 'body',
             title: 'Body',
             type: 'array',
             of: [{ type: 'block' }]
         }),
+        //Cover Image
         defineField({
             name: 'coverImage',
             title: 'Cover Image',
             type: 'image',
             options: { hotspot: true }
         }),
+        //Actions
         defineField({
             name: 'actions',
             title: 'Actions',
             type: 'array',
             of: [{ type: 'button' }]
         }),
+        //Variants
         defineField({
             name: 'variant',
             title: 'Variant',
@@ -51,5 +56,5 @@ export const heroSection = defineType({
                 ]
             }
         }),
-    ]
+    ],
 })

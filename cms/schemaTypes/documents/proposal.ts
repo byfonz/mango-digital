@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {sectionTypes} from '../sections'
+import { SECTION_TYPE_LABELS } from '../../constants/sectionTypes'
 
 export const proposalType = defineType({
   name: 'proposal',
@@ -60,10 +61,16 @@ export const proposalType = defineType({
     }),
     //Sections
     defineField({
-      name: 'sections',
+      name: 'section',
       title: 'Sections',
       type: 'array',
       of: sectionTypes,
     }),
+    //SEO
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    })
   ],
 })

@@ -31,6 +31,9 @@ import { postType } from "./documents/post";
 import { caseStudy } from "./documents/caseStudy";
 import { link } from "./objects/link";
 import { serviceSection } from "./sections/serviceSection";
+import { seo } from "./objects/seo";
+import { teamSection } from "./sections/teamSection";
+import { teamMember } from "./objects/teamMember";
 
 export const schemaTypes = [
     //Documents
@@ -46,6 +49,7 @@ export const schemaTypes = [
     serviceSection,
     pricingSection,
     faqSection,
+    teamSection,
     ctaSection,
     //Blocks
     textBlock,
@@ -66,8 +70,10 @@ export const schemaTypes = [
     tabItem,
     accordionItem,
     faqItem,
+    teamMember,
     button,
     featureItem,
     pricingPlan,
-    timelineItem
+    timelineItem,
+    seo
 ]

@@ -2,10 +2,10 @@ import {defineField, defineType} from 'sanity';
 
 export const seo = defineType({
     name: 'seo',
-    title: 'Seo Settings',
+    title: 'SEO Settings',
     type: 'object',
     fields: [
-        //Page Title
+        //Title
         defineField({
             name: 'title',
             title: 'Page Title',
@@ -14,7 +14,7 @@ export const seo = defineType({
         //Description
         defineField({
             name: 'description',
-            title: 'Page Description',
+            title: 'Meta Description',
             type: 'string',
         }),
         //Canonical URL
@@ -23,7 +23,18 @@ export const seo = defineType({
             title: 'Canonical URL',
             type: 'url',
         }),
-        //Robots Txt
-        //Open Graph
+        //OG Image
+        defineField({
+            name: 'ogImage',
+            title: 'Open Graph Image',
+            type: 'image',
+            options: { hotspot: true }
+        }),
+        //Index
+        defineField({
+            name: 'noIndex',
+            title: 'No Index',
+            type: 'boolean',
+        }),
     ]
 })
