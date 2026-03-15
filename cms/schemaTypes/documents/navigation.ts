@@ -12,37 +12,29 @@ export const navigationType = defineType({
             type: 'string',
             validation: (rule) => rule.required(),
         }),
-        //Type
+        //Placement
         defineField({
-            name: 'type',
-            title: 'Type',
+            name: 'placement',
+            title: 'Placement',
             type: 'string',
             options: {
                 list: [
                     {
-                        title: 'Navbar',
-                        value: 'navbar'
+                        title: 'Header',
+                        value: 'header'
                     },
                     {
                         title: 'Footer',
                         value: 'footer'
                     },
-                    {
-                        title: 'Sidebar',
-                        value: 'sidebar'
-                    },
-                    {
-                        title: 'Dashboard',
-                        value: 'dashboard'
-                    },
                 ]
             },
             validation: (rule) => rule.required(),
         }),
-        //Location
+        //Context
         defineField({
-            name: 'location',
-            title: 'Location',
+            name: 'context',
+            title: 'Context',
             type: 'string',
             options: {
                 list: [

@@ -1,14 +1,21 @@
 import { ImageAssetType } from "../objects/image-item";
-import { NavMenuItem } from "../objects/navigation-item";
+import { NavigationMenuItem } from "../objects/navigation-item";
 
-export type NavMenuType = {
+export type NavigationMenu = {
     _id: string;
     title: string;
-    slug: string;
-    logo?: {
-        url: string;
-    };
-    items: NavMenuItem[];
+    placement: NavigationMenuPlacement;
+    context: NavigationMenuContext;
+    logo?: ImageAssetType;
+    items: NavigationMenuItem[];
 }
 
+export type NavigationMenuPlacement =
+| 'header'
+| 'footer'
 
+export type NavigationMenuContext = 
+| 'client'
+| 'dashboard'
+| 'proposal'
+| 'landing'

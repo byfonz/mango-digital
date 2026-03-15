@@ -5,6 +5,24 @@ export const link = defineType({
     title: 'Link',
     type: 'object',
     fields: [
+        //Type
+        defineField({
+            name: 'type',
+            title: 'Type',
+            type: 'string',
+            options: {
+                list: [
+                    {
+                        title: 'Internal',
+                        value: 'internal'
+                    },
+                    {
+                        title: 'External',
+                        value: 'external'
+                    },
+                ]
+            }
+        }),
         //URL
         defineField({
             name: 'url',

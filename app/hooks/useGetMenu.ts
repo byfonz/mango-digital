@@ -1,18 +1,19 @@
-import { menuQuery } from "@/lib/queries/menu";
+import { mapNavigation } from "@/lib/mappers/navigationMapper";
+import { navigationQuery } from "@/lib/queries/documents/navigation";
 import { client } from "@/lib/sanity";
-import { NavMenuType } from "@/types/documents/navigation";
+import type { NavigationMenu, NavigationMenuPlacement, NavigationMenuContext } from "@/types/documents/navigation";
 
-export async function getMenu(
-    slug: string
-): Promise<NavMenuType | null> {
-    if (!slug) {
-        return null
-    };
+export async function getNavigationMenu(
+    placement: NavigationMenuPlacement,
+    context: NavigationMenuContext
+): Promise<NavigationMenu | null> {
 
-    const menu = await client.fetch<NavMenuType | null>(
-        menuQuery,
-        { slug }
-    )
+    const data = await client.fetch(
+        navigationQuery,
+        { placement, context }
+    );
 
-    return menu;
+    if (!data) return null;
+
+    return mapNavigation(data);
 }

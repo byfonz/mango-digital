@@ -1,17 +1,17 @@
-import { ProposalHeader } from "@/components/proposal-header";
+import { Header } from "@/components/navigation/header";
 import { SectionRenderer } from "@/components/section-renderer";
-import { getMenu } from "@/hooks/useGetMenu";
+import { getNavigationMenu } from "@/hooks/useGetMenu";
 import { getProposal } from "@/hooks/useGetProposal";
 import { Section } from "@/types/documents/section";
 
 export default async function Page({ 
   params 
 }: { 
-  params: Promise<{ slug: string }> 
+  params: { slug: string }
 }) {
   const { slug } = await params;
   const data = await getProposal(slug);
-  const menu = await getMenu('proposal');
+  const menu = await getNavigationMenu('header', 'proposal');
 
   if (!data) {
     return <p>Proposal Not Found</p>
@@ -21,7 +21,7 @@ export default async function Page({
 
   return (
     <main className="flex flex-col space-y-10">
-      <ProposalHeader nav={menu}/>
+      <Header navigation={menu}/>
       {data.sections.map((section: Section) => (
         <SectionRenderer
           key={section._key}

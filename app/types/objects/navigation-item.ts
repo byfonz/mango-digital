@@ -1,6 +1,9 @@
-export type NavMenuItem = {
+import { Link } from "./link";
+
+export type NavigationMenuItem = {
     _key:string;
     label: string;
-    href?: string;
-    target?: '_self' | '_blank';
+    icon: string;
+    link: Link;
+    children: NavigationMenuItem[];
 }
