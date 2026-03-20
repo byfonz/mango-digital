@@ -1,7 +1,25 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { linkResolver } from "@/lib/link-resolver";
-import { NavigationMenu } from "@/types/documents/navigation";
+import type { NavigationMenu } from "@/types/documents/navigation";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "../ui/button";
+import { NavigationItems } from "./navigation-menu";
+import { LucideMenu, LucideX } from "lucide-react";
+import { ImageAssetType } from "@/types/objects/image-item";
+import { SocialsMenu } from "./socials-menu";
 
 interface Props {
   navigation: NavigationMenu | null;
@@ -12,26 +30,69 @@ export function Header({ navigation }: Props) {
     return null;
   }
 
-  return (
-    <header className="flex items-center justify-between">
-      {navigation.logo?.url && (
-        <Image src={navigation.logo?.url} alt="logo" width={120} height={40} />
-      )}
-      <nav className="flex gap-3">
-        {navigation.items?.map((item) => {
-          const href = linkResolver(item.link);
+  const logo = navigation.logo?.asset;
+  const width = navigation.logo?.asset?.metadata?.dimensions?.width ?? 120;
+  const height = navigation.logo?.asset?.metadata?.dimensions?.height ?? 60;
 
-          return (
-            <Link 
-                key={item._key} 
-                href={href}
-                target={item.link?.target}
+  return (
+    <header className="fixed w-full max-w-7xl top-4 lg:top-6 left-0 right-0 z-50  ">
+      <div className="mx-auto flex min-w-full items-center justify-between px-6 py-3 bg-background border rounded-xl">
+        {/* Logo */}
+        {logo?.url && (
+          <Link href="/" className="flex items-center">
+            <Image
+              src={logo?.url}
+              alt={navigation.title ?? "Logo"}
+              width='96'
+              height='40'
+            />
+          </Link>
+        )}
+        {/* Navigation Menu */}
+        <nav className="hidden md:flex gap-3">
+          <NavigationItems items={navigation.items} />
+        </nav>
+        {/* CTAs */}
+        <div className="hidden md:flex items-center">
+          <Button className="py-2.5">
+            Descargar Propuesta
+          </Button>
+          {navigation.ctas?.map((item) => {
+            const href = linkResolver(item.href);
+
+            return (
+              <Link key={item.label} href={href}>
+                <Button size={item.size}>
+                  {item.label}
+                </Button>
+              </Link>
+            );
+          })}
+        </div>
+        {/* Mobile Navigation */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              size="icon"
+              variant="outline"
+              className="md:hidden rounded-full"
             >
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
+              <LucideMenu />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-screen p-6">
+            <SheetHeader>
+              <SheetTitle>Navigation</SheetTitle>
+            </SheetHeader>
+            {/* Nav Menu */}
+            <nav className="mt-2 flex flex-col gap-6">
+              <NavigationItems items={navigation.items} />
+            </nav>
+            {/* Socials Menu */}
+            <SocialsMenu items={navigation.socials ?? []} />
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   );
 }

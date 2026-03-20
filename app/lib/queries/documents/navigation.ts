@@ -1,6 +1,9 @@
 import { groq } from "next-sanity"
 import { imageFragment } from "../fragments/image"
 import { navigationItemProjection } from "../projections/navigationItemProjection"
+import { ctaProjection } from "../projections/ctaBlockProjection"
+import { navigationSectionProjection } from "../projections/navigationSectionProjection"
+import { socialLinkProjection } from "../projections/socialLinkProjection"
 
 export const navigationQuery = groq`
 *[
@@ -21,6 +24,18 @@ export const navigationQuery = groq`
 
   items[]{
     ${navigationItemProjection}
+  },
+
+  ctas[]{
+    ${ctaProjection}
+  },
+
+  socials[]{
+    ${socialLinkProjection}
+  },
+
+  sections[]{
+    ${navigationSectionProjection}
   }
 }
 `

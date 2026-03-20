@@ -4,7 +4,6 @@ export const accordionBlockProjection = `
 _type == 'accordionBlock' => {
     _key,
     _type,
-    title,
     items[]{
         _key,
         title,

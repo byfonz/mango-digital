@@ -1,5 +1,8 @@
+import { Button } from "../objects/button";
 import { ImageAssetType } from "../objects/image-item";
-import { NavigationMenuItem } from "../objects/navigation-item";
+import { NavigationMenuItem } from "../objects/navigation/navigation-item";
+import { NavigationGroup } from "../objects/navigation/navigation-group";
+import { SocialLink } from "../objects/social-link";
 
 export type NavigationMenu = {
     _id: string;
@@ -8,6 +11,9 @@ export type NavigationMenu = {
     context: NavigationMenuContext;
     logo?: ImageAssetType;
     items: NavigationMenuItem[];
+    groups?: NavigationGroup[];
+    ctas?: Button[];
+    socials?: SocialLink[];
 }
 
 export type NavigationMenuPlacement =

@@ -15,17 +15,13 @@ export function HeroSection({ section, proposal }: Props) {
   const date = proposal.meta?.date;
   const tags =  proposal.meta?.tags;
 
-  const imageUrl = coverImage
-    ? urlFor(coverImage).width(2000).height(420).fit("crop").url()
-    : null
-
   return (
     <section>
       {/* Cover Image */}
-      {imageUrl && (
-        <div className=" w-full h-[420px] overflow-hidden rounded-lg">
+      {coverImage && (
+        <div className=" w-full max-w-7xl h-[420px] overflow-hidden rounded-lg">
           <Image
-            src={imageUrl}
+            src={coverImage.asset.url}
             alt=''
             fill
             priority

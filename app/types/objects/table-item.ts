@@ -3,6 +3,6 @@ export type TableRow = {
     cells: string[];
 };
 
-export type TableItemType = {
+export type TableItem = {
     rows: TableRow[];
 }

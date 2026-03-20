@@ -1,4 +1,4 @@
-import type { Block } from "@/types/blocks";
+import type { Block } from "@/types/blocks/block";
 import { TextBlock } from "./blocks/text-block";
 import { SubSectionBlock } from "./blocks/subsection-block";
 import { TableBlock } from "./blocks/table-block";

@@ -1,5 +1,5 @@
 import { NavigationMenu } from "@/types/documents/navigation";
-import { NavigationMenuItem } from "@/types/objects/navigation-item";
+import { NavigationMenuItem } from "@/types/objects/navigation/navigation-item";
 
 export function mapNavigation(data: any): NavigationMenu {
 

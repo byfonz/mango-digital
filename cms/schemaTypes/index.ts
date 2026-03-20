@@ -1,79 +1,124 @@
-import { accordionBlock } from "./blocks/accordionBlock";
-import { featureBlock } from "./blocks/featureBlock";
-import { galleryBlock } from "./blocks/galleryBlock";
-import { imageBlock } from "./blocks/imageBlock";
-import { pricingBlock } from "./blocks/pricingBlock";
-import { sliderBlock } from "./blocks/sliderBlock";
-import { subsectionBlock } from "./blocks/subsectionBlock";
-import { tableBlock } from "./blocks/tableBlock";
-import { textBlock } from "./blocks/textBlock";
-import { timelineBlock } from "./blocks/timelineBlock";
-import { authorType } from "./documents/author";
-import { proposalType } from "./documents/proposal";
-import { accordionItem } from "./objects/accordionItem";
-import { button } from "./objects/button";
-import { featureItem } from "./objects/featureItem";
-import { navigationType } from "./documents/navigation";
-import { pricingPlan } from "./objects/pricingPlan";
-import { sectionType } from "./objects/section";
-import { slideItem } from "./objects/slideItem";
-import { timelineItem } from "./objects/timelineItem";
-import { tabBlock } from "./blocks/tabBlock";
-import { tabItem } from "./objects/tabItem";
-import { navigationItem } from "./objects/navigationItem";
-import { heroSection } from "./sections/heroSection";
-import { pricingSection } from "./sections/pricingSection";
-import { ctaSection } from "./sections/ctaSection";
-import { faqSection } from "./sections/faqSection";
-import { faqItem } from "./objects/faqItem";
-import { pageType } from "./documents/page";
-import { postType } from "./documents/post";
-import { caseStudy } from "./documents/caseStudy";
-import { link } from "./objects/link";
-import { serviceSection } from "./sections/serviceSection";
-import { seo } from "./objects/seo";
-import { teamSection } from "./sections/teamSection";
-import { teamMember } from "./objects/teamMember";
+//Documents
+import {page} from './documents/marketing/page'
+import {post} from './documents/marketing/post'
+import {presentation} from './documents/marketing/presentation'
+import {project} from './documents/marketing/project'
+import {service} from './documents/marketing/service'
+import {navigation} from './documents/system/navigation'
+import {authorType} from './documents/system/author'
+
+//Section
+import {section} from './sections/section'
+
+//Blocks
+import {contentBlock} from './blocks/content/content'
+import {headingBlock} from './blocks/content/heading'
+import {mediaBlock} from './blocks/content/media'
+import {quoteBlock} from './blocks/content/quote'
+import {collectionBlock} from './blocks/collections/collection'
+import {galleryBlock} from './blocks/collections/gallery'
+import {teamBlock} from './blocks/collections/team'
+import {testimonialBlock} from './blocks/collections/testimonial'
+import {statsBlock} from './blocks/data/stats'
+import {tableBlock} from './blocks/data/table'
+import {timelineBlock} from './blocks/data/timeline'
+import {accordionBlock} from './blocks/interactive/accordion'
+import {formBlock} from './blocks/interactive/form'
+import {sliderBlock} from './blocks/interactive/slider'
+import {tabBlock} from './blocks/interactive/tab'
+import {ctaBlock} from './blocks/marketing/cta'
+import {faqBlock} from './blocks/marketing/faq'
+import {featureBlock} from './blocks/marketing/feature'
+import {pricingBlock} from './blocks/marketing/pricing'
+
+//Objects
+import {media} from './objects/content/media'
+import {meta} from './objects/content/meta'
+import {seo} from './objects/content/seo'
+import {formField} from './objects/form/formFields'
+import {accordionItem} from './objects/items/accordionItem'
+import {faqItem} from './objects/items/faqItem'
+import {featureItem} from './objects/items/featureItem'
+import {pricingItem} from './objects/items/pricingPlan'
+import {slideItem} from './objects/items/slideItem'
+import {statItem} from './objects/items/statItem'
+import {tabItem} from './objects/items/tabItem'
+import {teamMember} from './objects/items/teamMember'
+import {testimonialItem} from './objects/items/testimonialItem'
+import {timelineItem} from './objects/items/timelineItem'
+import {navigationItem} from './objects/navigation/navigationItem'
+import {navigationChild} from './objects/navigation/navigationChild'
+import {navigationGroup} from './objects/navigation/navigationGroup'
+import {socialLink} from './objects/navigation/socialLink'
+import {badge} from './objects/ui/badge'
+import {button} from './objects/ui/button'
+import {link} from './objects/ui/link'
 
 export const schemaTypes = [
-    //Documents
-    pageType,
-    postType,
-    proposalType,
-    caseStudy,
-    sectionType,
-    authorType,
-    navigationType,
-    //Sections
-    heroSection,
-    serviceSection,
-    pricingSection,
-    faqSection,
-    teamSection,
-    ctaSection,
-    //Blocks
-    textBlock,
-    imageBlock,
-    tableBlock,
-    galleryBlock,
-    sliderBlock,
-    tabBlock,
-    accordionBlock,
-    featureBlock,
-    pricingBlock,
-    timelineBlock,
-    subsectionBlock,
-    //Objects
-    link,
-    navigationItem,
-    slideItem,
-    tabItem,
-    accordionItem,
-    faqItem,
-    teamMember,
-    button,
-    featureItem,
-    pricingPlan,
-    timelineItem,
-    seo
+  //Documents
+  page,
+  post,
+  presentation,
+  project,
+  service,
+
+  authorType,
+  navigation,
+
+  //Sections
+  section,
+
+  //Blocks
+  // Content
+  contentBlock,
+  headingBlock,
+  mediaBlock,
+  quoteBlock,
+  // Collection
+  collectionBlock,
+  galleryBlock,
+  teamBlock,
+  testimonialBlock,
+  // Data
+  statsBlock,
+  tableBlock,
+  timelineBlock,
+  // Interactive
+  accordionBlock,
+  formBlock,
+  sliderBlock,
+  tabBlock,
+  // Marketing
+  ctaBlock,
+  faqBlock,
+  featureBlock,
+  pricingBlock,
+
+  //Objects
+  //Content
+  media,
+  meta,
+  seo,
+  //Fields
+  formField,
+  //Items
+  accordionItem,
+  faqItem,
+  featureItem,
+  pricingItem,
+  slideItem,
+  statItem,
+  tabItem,
+  teamMember,
+  testimonialItem,
+  timelineItem,
+  //Navigation
+  navigationItem,
+  navigationChild,
+  navigationGroup,
+  socialLink,
+  //UI
+  badge,
+  button,
+  link,
 ]

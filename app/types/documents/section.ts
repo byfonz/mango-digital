@@ -1,4 +1,4 @@
-import { Block } from "../blocks";
+import { Block } from "../blocks/block";
 
 export type Section = {
     _key: string;

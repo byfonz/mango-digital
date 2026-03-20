@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { AccordionBlockType } from "@/types/blocks/accordionBlock"
+import { AccordionBlockType } from "@/types/blocks/accordion"
 import { BlockRenderer } from "../block-renderer";
 
 interface Props {
