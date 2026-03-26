@@ -4,7 +4,7 @@ import { NavigationMenuItem } from "../objects/navigation/navigation-item";
 import { NavigationGroup } from "../objects/navigation/navigation-group";
 import { SocialLink } from "../objects/social-link";
 
-export type NavigationMenu = {
+export type Navigation = {
     _id: string;
     title: string;
     placement: NavigationMenuPlacement;

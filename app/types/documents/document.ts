@@ -12,7 +12,30 @@ export type Document = {
     seo?: Seo; 
 }
 
+export type DocumentTemplate = {
+    type: DocumentType;
+    sections: DocumentSection[];
+}
+
+export type DocumentSection = {
+    id: string;
+    title: string;
+    blocks: DocumentBlock[];
+}
+
+export type DocumentBlock = {
+    type: DocumentBlockType;
+    title: string;
+    path?: string;
+}
+
 export type DocumentType = 
 | 'proposal'
 | 'invoice'
 | 'slideDeck';
+
+export type DocumentBlockType = 
+| 'text'
+| 'richText'
+| 'date'
+| 'title';

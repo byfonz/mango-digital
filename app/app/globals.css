@@ -129,3 +129,14 @@
 .heading {
   @apply font-heading -tracking-tighter
 }
+
+/* Layout */
+.page-wrapper{
+  @apply flex flex-col p-4 lg:p-8 gap-6;
+}
+.page-header{
+  @apply flex items-center justify-between;
+}
+.page-header-actions{
+  @apply flex items-center gap-2;
+}
